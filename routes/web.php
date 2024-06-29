@@ -4,6 +4,7 @@ use App\Http\Controllers\AmcPostsController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AmcForumsController;
+use App\Http\Controllers\SupportTicketsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,12 +43,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    
-    Route::resource('forum', AmcForumsController::class)
-    ->middleware(['auth']);
 
-    Route::resource('post', AmcPostsController::class)
-    ->middleware(['auth']);
+    Route::resource('forum', AmcForumsController::class);
+
+    Route::resource('post', AmcPostsController::class);
+
+    Route::resource('support', SupportTicketsController::class);
 });
 
 

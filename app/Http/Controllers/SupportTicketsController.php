@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Support_tickets;
+use App\Models\support_tickets;
 use Illuminate\Http\Request;
 
 class SupportTicketsController extends Controller

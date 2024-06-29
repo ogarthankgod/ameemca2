@@ -1,13 +1,13 @@
 <script setup>
     import Header from "./Header.vue";
     import { Link } from "@inertiajs/vue3";
-    import image1 from "./Images/art/savings.jpg";
-    import image2 from "./Images/art/800px-Money_saving_growth.jpg";
-    import image3 from "./Images/art/gross-pension-contribution.jpg";
+    // import image1 from "./Images/art/savings.jpg";
+    // import image2 from "./Images/art/800px-Money_saving_growth.jpg";
+    // import image3 from "./Images/art/gross-pension-contribution.jpg";
     import image4 from "./Images/art/handshake.png";
-    import image5 from "./Images/art/money-grow.jpg";
-    import image6 from "./Images/art/moneygrow.jpg";
-    import image7 from "./Images/art/return_on_investment.jpg";
+    // import image5 from "./Images/art/money-grow.jpg";
+    // import image6 from "./Images/art/moneygrow.jpg";
+    // import image7 from "./Images/art/return_on_investment.jpg";
     import vision from "./Images/art/vision.svg";
     import Logo from "@/Components/Logo.vue";
 </script>

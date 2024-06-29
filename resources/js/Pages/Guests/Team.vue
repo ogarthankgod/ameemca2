@@ -12,6 +12,7 @@ import exmember1 from "./Images/team/exmember1.png";
 import exmember2 from "./Images/team/exmember2.jpg";
 import adhocmember1 from "./Images/team/adhocmember1.png";
 import adhocmember2 from "./Images/team/adhocmember2.jpg";
+import lclmember from "./Images/team/lclmember.jpg";
 
 defineProps({
     canLogin: {
@@ -83,7 +84,7 @@ const teams =[
         id:1,
         name:'Chinasa Anyanwu',
         position:'Lagos Consulate Liason Member',
-        image:adhocmember1,
+        image:lclmember,
         quote:'"Teamwork makes the dream a reality." – John C. Maxwell'
     },
     {
