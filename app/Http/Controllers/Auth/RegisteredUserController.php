@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Package;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -18,9 +19,14 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): Response
+    public function create(Package $package): Response
     {
-        return Inertia::render('Auth/RegisterNew');
+        $package = ($package ?? 0);
+        $packages = Package::whereNot('id', '2')->get();
+        return Inertia::render('Auth/RegisterNew', [
+            'package' => $package,
+            'packages' => $packages
+        ]);
     }
 
     /**
@@ -34,12 +40,12 @@ class RegisteredUserController extends Controller
             'firstname' => 'required|string|max:50',
             'lastname' => 'required|string|max:50',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
-            'secondary_email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            // 'secondary_email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
 
             'gender' => 'required|string',
             'phone' => 'required|string',
-            'second_phone' => 'required|string',
+            // 'second_phone' => 'required|string',
             'state' => 'required|string',
             'country' => 'required|string',
             'address' => 'required|string',
@@ -48,7 +54,7 @@ class RegisteredUserController extends Controller
             'employee_post' => 'required|integer',
             'agency_bureau' => 'required|string',
 
-            'date_of_employment' => 'required|string',
+            // 'date_of_employment' => 'required|string',
 
             'package' => 'required|integer',
 
