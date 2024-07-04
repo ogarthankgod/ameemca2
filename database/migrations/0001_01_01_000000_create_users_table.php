@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,8 +14,8 @@ return new class extends Migration
             $table->id();
             $table->enum("type", ["user", "admin"]);
             $table->string('email')->nullable(true)->default(null);
-            $table->enum('title', ["president", "finsec", "treasurer", "gensec"]);
-            $table->string('comment');  
+            $table->enum('title', ["President", "Finsec", "Treasurer", "Gensec", "Staff"]);
+            $table->string('comment');
             $table->timestamps();
         });
 
@@ -48,10 +47,10 @@ return new class extends Migration
             ]);
             $table->integer("employee_number");
 
-            $table->decimal("allotment_amount", 8,2);
+            $table->decimal("allotment_amount", 8, 2);
             $table->text("allotment_desc");
             $table->text("allotment_file");
-            $table->decimal("reg_fee", 8,2);
+            $table->decimal("reg_fee", 8, 2);
 
             $table->date("date_of_employment");
 
@@ -68,7 +67,7 @@ return new class extends Migration
             $table->string("nokcountry")->nullable();
             $table->text("nokaddress")->nullable();
 
-            $table->enum("onboarding_phase", [1,2,3, null])->default(null);
+            $table->enum("onboarding_phase", [1, 2, 3, null])->default(null);
             //1:Basic, 2:Employment Info & Allotment, 3:Nok Info..
 
             $table->rememberToken();

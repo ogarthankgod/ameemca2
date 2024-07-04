@@ -1,20 +1,19 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
+
 </script>
 
 <template>
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <template #header>
+        <section class="hidden flex-col w-full">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dashboard
             </h2>
-        </template>
 
-        <template>
-            <article class="rounded-lg border border-gray-100 bg-white p-6">
+                        <article class="rounded-lg border border-gray-100 bg-white p-6">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500">Profit</p>
@@ -65,6 +64,7 @@ import { Head } from "@inertiajs/vue3";
                     </p>
                 </div>
             </article>
+
 
             <article class="rounded-lg border border-gray-100 bg-white p-6">
                 <div class="flex items-center justify-between">
@@ -117,13 +117,16 @@ import { Head } from "@inertiajs/vue3";
                     </p>
                 </div>
             </article>
-        </template>
-        <div class="py-12">
+
+            <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">You're logged in!</div>
                 </div>
             </div>
         </div>
+
+        </section>
+
     </AuthenticatedLayout>
 </template>

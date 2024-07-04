@@ -1,0 +1,21 @@
+when runing migrations on usertable,
+
+follow through..
+
+1. replace fname and lname with firstname and lastname respectively
+2. replace nokfirstname with nokfname
+
+skip above..
+
+create a new db, and import all backup of ameemca into it..
+on the new db tables, make the adjustments neccesary for the new db..
+
+rename fname to firstname
+rename lname to lastname
+rename nokfirstname to nokfname
+
+ALTER TABLE `usertable` CHANGE `fname` `firstname` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+ALTER TABLE `usertable` CHANGE `lname` `lastname` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+ALTER TABLE `usertable` ADD `user_type` BIGINT UNSIGNED NULL DEFAULT '1' AFTER `email`;
+ALTER TABLE `users` DROP INDEX `users_second_phone_unique`;
+ALTER TABLE `users` DROP INDEX `users_nokemail_unique`;

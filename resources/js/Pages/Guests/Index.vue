@@ -554,7 +554,7 @@
                     <span class="ml-3 text-xl"></span>
                 </Link>
                 <p class="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4">
-                    © 2020 - 2024 Ameemca..
+                    © 2020 - 2024 Ameemca &trade;..
                 </p>
                 <span
                     class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"

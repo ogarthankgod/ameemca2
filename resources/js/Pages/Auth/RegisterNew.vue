@@ -1,14 +1,11 @@
 <script setup>
-import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+// import InputLabel from "@/Components/InputLabel.vue";
+// import PrimaryButton from "@/Components/PrimaryButton.vue";
+// import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import AmeemcaLogo from "@/Components/LogoIcon.vue";
 import AmeemcaLogoPng from "@/Components/ameemca.png";
-
-import { ref } from "vue";
 
 const props = defineProps({
     packages: Object,
@@ -16,65 +13,67 @@ const props = defineProps({
 });
 
 const priceFormatter = new Intl.NumberFormat("en-US");
-const hasAgreedToTerms = ref(true);
-
 const states = [
-  "Abia",
-  "Adamawa",
-  "Akwa Ibom",
-  "Anambra",
-  "Bauchi",
-  "Bayelsa",
-  "Benue",
-  "Borno",
-  "Cross River",
-  "Delta",
-  "Ebonyi",
-  "Edo",
-  "Ekiti",
-  "Enugu",
-  "FCT - Abuja",
-  "Gombe",
-  "Imo",
-  "Jigawa",
-  "Kaduna",
-  "Kano",
-  "Katsina",
-  "Kebbi",
-  "Kogi",
-  "Kwara",
-  "Lagos",
-  "Nasarawa",
-  "Niger",
-  "Ogun",
-  "Ondo",
-  "Osun",
-  "Oyo",
-  "Plateau",
-  "Rivers",
-  "Sokoto",
-  "Taraba",
-  "Yobe",
-  "Zamfara"
+    "Abia",
+    "Adamawa",
+    "Akwa Ibom",
+    "Anambra",
+    "Bauchi",
+    "Bayelsa",
+    "Benue",
+    "Borno",
+    "Cross River",
+    "Delta",
+    "Ebonyi",
+    "Edo",
+    "Ekiti",
+    "Enugu",
+    "FCT - Abuja",
+    "Gombe",
+    "Imo",
+    "Jigawa",
+    "Kaduna",
+    "Kano",
+    "Katsina",
+    "Kebbi",
+    "Kogi",
+    "Kwara",
+    "Lagos",
+    "Nasarawa",
+    "Niger",
+    "Ogun",
+    "Ondo",
+    "Osun",
+    "Oyo",
+    "Plateau",
+    "Rivers",
+    "Sokoto",
+    "Taraba",
+    "Yobe",
+    "Zamfara",
 ];
 
 const form = useForm({
     package: "",
     firstname: "",
     lastname: "",
+    gender:'',
     email: "",
+    phone:'',
     password: "",
     password_confirmation: "",
     employee_number: "",
     employee_post: "",
     agency_bureau: "",
     home_address: "",
-    country:'nigeria',
-    state:'',
+    country: "nigeria",
+    state: "",
     newsletterAccept: true,
 });
 
-props.package.length !== 0 ? form.package=props.package.id : form.package=0;
+props.package.length !== 0
+    ? (form.package = props.package.id)
+    : (form.package = 0);
 
 const employeePosts = [
     { id: 1, post: "56002 - Nigeria-Abuja" },
@@ -162,6 +161,7 @@ const submit = () => {
                                 name="package"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                                 v-model="form.package"
+                                required
                             >
                                 <option value="0" selected disabled>
                                     Select Package
@@ -199,6 +199,7 @@ const submit = () => {
                                 id="FirstName"
                                 placeholder="firstname"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                required
                             />
                             <InputError
                                 class="mt2"
@@ -220,12 +221,36 @@ const submit = () => {
                                 id="LastName"
                                 placeholder="lastname"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                required
                             />
                             <InputError
                                 class="mt2"
                                 :message="form.errors.lastname"
                             />
                         </div>
+
+                        <!-- <div class="col-span-6 sm:col-span-3">
+                            <label
+                                for="gender"
+                                class="block text-sm font-medium text-gray-700"
+                            >
+                                Gender
+                            </label>
+
+                             //Get radio or switch components from daisyUI for gender and phone
+                            <input
+                                v-model="form.firstname"
+                                type="radio"
+                                id="FirstName"
+                                placeholder="firstname"
+                                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                required
+                            />
+                            <InputError
+                                class="mt2"
+                                :message="form.errors.firstname"
+                            />
+                        </div> -->
 
                         <div class="col-span-6">
                             <label
@@ -241,6 +266,7 @@ const submit = () => {
                                 id="Email"
                                 placeholder="email@webmail.com"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                required
                             />
                             <InputError
                                 class="mt2"
@@ -260,9 +286,9 @@ const submit = () => {
                                 v-model="form.password"
                                 type="password"
                                 id="Password"
-                                name="password"
                                 placeholder="password"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                required
                             />
                             <InputError
                                 class="mt2"
@@ -284,6 +310,7 @@ const submit = () => {
                                 id="PasswordConfirmation"
                                 placeholder="confirm password"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                required
                             />
                             <InputError
                                 class="mt2"
@@ -305,6 +332,7 @@ const submit = () => {
                                 id="employee_number"
                                 placeholder="employee number"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                required
                             />
                             <InputError
                                 class="mt2"
@@ -325,9 +353,10 @@ const submit = () => {
                                 placeholder="employee post"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                                 v-model="form.employee_post"
+                                required
                             >
                                 <option value="" selected disabled>
-                                   Your Employee Post
+                                    Your Employee Post
                                 </option>
 
                                 <option
@@ -356,9 +385,14 @@ const submit = () => {
                                 id="state"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                                 v-model="form.state"
+                                required
                             >
-                                <option v-for="state in states" :key="state" value="state">
-                                  {{ state }}
+                                <option
+                                    v-for="state in states"
+                                    :key="state"
+                                    value="state"
+                                >
+                                    {{ state }}
                                 </option>
                             </select>
                             <InputError
@@ -378,10 +412,11 @@ const submit = () => {
                                 id="country"
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                                 v-model="form.country"
+                                required
                                 disabled
                             >
                                 <option value="nigeria" selected>
-                                  Nigeria
+                                    Nigeria
                                 </option>
                             </select>
                             <InputError
@@ -404,6 +439,7 @@ const submit = () => {
                                 id="home_address"
                                 placeholder="address..."
                                 class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                                required
                             ></textarea>
 
                             <InputError
@@ -420,6 +456,7 @@ const submit = () => {
                                     type="checkbox"
                                     id="newsletterAccept"
                                     class="size-5 rounded-md border-gray-200 bg-white shadow-sm"
+                                    required
                                 />
 
                                 <span class="text-sm text-gray-700">
@@ -443,15 +480,19 @@ const submit = () => {
                         >
                             <button
                                 class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                                :disabled="form.processing"
+                                :class="{ 'opacity-25': form.processing }"
+                                type="submit"
                             >
-                                Create an account
+                                Sign Up
                             </button>
-
+                        </div>
+                        <div class="mt-3 col-span-6">
                             <p class="mt-4 text-sm text-gray-500 sm:mt-0">
                                 Already have an account?
                                 <Link
                                     :href="route('login')"
-                                    class="text-gray-700 underline"
+                                    class="text-blue-700 underline"
                                     >Log in</Link
                                 >.
                             </p>
