@@ -12,13 +12,8 @@ import { createVuestic } from "vuestic-ui";
 // import { createPinia } from 'pinia';
 
 //Importing FlowBite Components
-// import { onMounted } from 'vue'
-// import { initFlowbite } from 'flowbite'
-
-// initialize components based on data attribute selectors
-// onMounted(() => {
-//     initFlowbite();
-// });
+import { onMounted } from "vue";
+import { initFlowbite } from "flowbite";
 
 //Use only without tailwind
 // import "vuestic-ui/css";
@@ -32,6 +27,11 @@ import { OhVueIcon } from "oh-vue-icons";
 
 const appName = import.meta.env.VITE_APP_NAME || "Ameemca Portal";
 // const pinia = createPinia()
+
+// initialize components based on data attribute selectors
+// onMounted(() => {
+//     initFlowbite();
+// });
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

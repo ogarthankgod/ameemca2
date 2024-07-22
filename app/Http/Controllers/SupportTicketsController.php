@@ -13,6 +13,7 @@ class SupportTicketsController extends Controller
     public function index()
     {
         //
+        return "#1901 - Database is empty";
     }
 
     /**

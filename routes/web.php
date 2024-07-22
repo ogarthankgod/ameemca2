@@ -35,11 +35,9 @@ Route::post('/contact', [GuestController::class, 'sendEnquiry'])->name('contact.
 
 
 Route::get('/dashboard', function () {
-
-    return Inertia::render('Dashboard', [
-
-    ]);
+    return Inertia::render('Dashboard', []);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -48,6 +46,31 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('forum', AmcForumsController::class);
+
+    Route::get('video', function() {
+        return 'Please Connect Video API.'; 
+    })->name('video.index');
+
+    Route::get('upgrade', function() {
+        return '...'; 
+    })->name('upgrade.index');
+
+    Route::get('byelaws', function() {
+        return 'ByeLaws..'; 
+    })->name('byelaws');
+
+    Route::get('guidlines', function() {
+        return '{{OP.Guidlines}}'; 
+    })->name('guidlines');
+
+    Route::get('Finance', function() {
+        return 'Wallet not Found!'; 
+    })->name('finance.index');
+
+    // Route::get('support', function() {
+    //     return "Database is empty!"; 
+    // })->name('support.index');
+
 
     Route::resource('post', AmcPostsController::class);
 

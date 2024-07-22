@@ -15,7 +15,7 @@ defineProps({
 
 const packages = [
 {
-        id:1,
+        id:3,
         fee_type:'Registration',
         name:'Platinum',
         price:'N50,000',
@@ -29,7 +29,7 @@ const packages = [
         ],
     },
     {
-        id:2,
+        id:1,
         fee_type:'Registration',
         name:'Diamond',
         price:'N50,000',
@@ -43,7 +43,7 @@ const packages = [
         ],
     },
     {
-        id:1,
+        id:4,
         fee_type:'Registration',
         name:'Contractor',
         price:'N50,000',

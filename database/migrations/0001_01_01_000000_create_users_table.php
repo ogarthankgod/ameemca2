@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
 
 return new class extends Migration {
     /**
@@ -19,10 +20,14 @@ return new class extends Migration {
             $table->timestamps();
         });
 
+        Artisan::call('db:seed', [
+            '--class' => 'DatabaseSeeder',
+        ]);
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->integer("staffid")->unique();
-            $table->foreignId("user_type")->constrained("user_types")->nullable()->default(null);
+            $table->foreignId("user_type")->default(1)->constrained("user_types");
 
             $table->string('firstname');
             $table->string('lastname');
@@ -31,28 +36,29 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            $table->string("gender");
+            $table->string("gender")->nullable();
             $table->string("phone")->unique()->nullable()->default(null);
             $table->string("second_phone")->unique()->nullable()->default(null);
-            $table->string("state");
-            $table->string("country");
-            $table->text("address");
+            $table->string("state")->nullable();
+            $table->string("country")->nullable();
+            $table->text("address")->nullable();
 
             $table->text("photo")->nullable();
 
-            $table->string("agency_bureau");
-            $table->enum("employee_post", [
-                "56002-Nigeria-Lagos",
-                "56002-Nigeria-Abuja"
-            ]);
-            $table->integer("employee_number");
+            $table->string("agency_bureau")->nullable();
+            // $table->enum("employee_post", [
+            //     "56002-Nigeria-Lagos",
+            //     "56002-Nigeria-Abuja"
+            // ]);
+            $table->string("employee_post")->default("56002-Nigeria-Abuja");
+            $table->string("employee_number");
 
-            $table->decimal("allotment_amount", 8, 2);
+            $table->decimal("allotment_amount",13, 2)->default(0.00)->nullable();
             $table->text("allotment_desc");
             $table->text("allotment_file");
-            $table->decimal("reg_fee", 8, 2);
+            $table->decimal("reg_fee", 13, 2)->default(0.00)->nullable();
 
-            $table->date("date_of_employment");
+            $table->date("date_of_employment")->nullable()->default(null);
 
             $table->integer("code");
             $table->string("status");
@@ -67,7 +73,7 @@ return new class extends Migration {
             $table->string("nokcountry")->nullable();
             $table->text("nokaddress")->nullable();
 
-            $table->enum("onboarding_phase", [1, 2, 3, null])->default(null);
+            $table->enum("onboarding_phase", [1, 2, 3, null])->nullable()->default(null);
             //1:Basic, 2:Employment Info & Allotment, 3:Nok Info..
 
             $table->rememberToken();

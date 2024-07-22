@@ -35,6 +35,10 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $user ? [
                     'name' => $user?->firstname . '. ' . str_split($user?->lastname)[0],
+                    'firstname' => $user?->firstname ?? "",
+                    'lastname' => $user?->lastname ?? "",
+                    'email' => $user?->email ?? '',
+                    'secondaryEmail' => $user?->secondary_email  ?? '',
                     'fullname' => $user?->firstname . ' ' . $user?->lastname,
                     'img' => $user?->photo ?? false,
                 ] : '',

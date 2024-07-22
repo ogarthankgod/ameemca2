@@ -1,7 +1,8 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
-import { onMounted } from "vue";
-import { initFlowbite } from "flowbite";
+// import { onMounted } from "vue";
+// import { initFlowbite } from "flowbite";
+
 import {
     FaBook,
     FaChartPie,
@@ -32,9 +33,9 @@ addIcons(
 );
 
 // initialize components based on data attribute selectors
-onMounted(() => {
-    initFlowbite();
-});
+// onMounted(() => {
+//     initFlowbite();
+// });
 
 const sidebarItems1 = [
     {
@@ -65,13 +66,13 @@ const sidebarItems1 = [
     },
     {
         id: 3,
-        route: "forums.index",
+        route: "forum.index",
         icon: "fa-comments",
         text: "Forums",
     },
     {
         id: 4,
-        route: "settings.index",
+        route: "profile.edit",
         //ri-settings-3-fill
         icon: "md-settingssuggest",
         text: "Settings",
@@ -84,7 +85,7 @@ const sidebarItems1 = [
     },
     {
         id: 6,
-        route: "upgrade",
+        route: "upgrade.index",
         icon: "fa-fire",
         text: "Upgrade Package",
     },
@@ -93,7 +94,7 @@ const sidebarItems1 = [
 const sidebarItems2 = [
     {
         id: 1,
-        route: "support",
+        route: "support.index",
         icon: "md-supportagent-round",
         text: "Support",
     },
@@ -125,7 +126,7 @@ const sidebarItems2 = [
                 <li v-for="item in sidebarItems1" :key="item.id">
                     <Link
                         class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                        href="#"
+                        :href="route(item.route)"
                         v-if="!item.children"
                     >
                         <v-icon
@@ -185,7 +186,7 @@ const sidebarItems2 = [
                     >
                         <li v-for="child in item.children">
                             <Link
-                                href="#"
+                                :href="route(child.route)"
                                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                                 >{{ child.text }}</Link
                             >

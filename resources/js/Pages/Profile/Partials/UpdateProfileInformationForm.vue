@@ -17,8 +17,10 @@ defineProps({
 const user = usePage().props.auth.user;
 
 const form = useForm({
-    name: user.name,
+    firstname: user.firstname,
+    lastname: user.lastname,
     email: user.email,
+    secondaryEmail: user.secondaryEmail,
 });
 </script>
 
@@ -34,19 +36,32 @@ const form = useForm({
 
         <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="firstname" value="First Name" />
 
                 <TextInput
-                    id="name"
+                    id="firstname"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.name"
+                    v-model="form.firstname"
                     required
-                    autofocus
-                    autocomplete="name"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.firstname" />
+            </div>
+            
+            <div>
+                <InputLabel for="lastname" value="Last Name" />
+
+                <TextInput
+                    id="lastname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.lastname"
+                    required
+                    autocomplete="lastname"
+                />
+
+                <InputError class="mt-2" :message="form.errors.lastname" />
             </div>
 
             <div>
@@ -62,6 +77,21 @@ const form = useForm({
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div>
+                <InputLabel for="secondary_email" value="Secondary Email" />
+
+                <TextInput
+                    id="secondary_email"
+                    type="email"
+                    class="mt-1 block w-full"
+                    v-model="form.secondaryEmail"
+                    required
+                    autocomplete="email"
+                />
+
+                <InputError class="mt-2" :message="form.errors.secondaryEmail" />
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">

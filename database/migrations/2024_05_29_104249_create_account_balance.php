@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer("staffid")->foreign("staffid")->constrained("users", "staffid")->references("staffid");
             $table->decimal("balance", 13,2);
-            $table->dateTime('time');
+            $table->string('time');
             $table->timestamps();
         });
     }

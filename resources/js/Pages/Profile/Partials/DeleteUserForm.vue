@@ -22,7 +22,7 @@ const confirmUserDeletion = () => {
 };
 
 const deleteUser = () => {
-    form.delete(route('profile.destroy'), {
+    form.delete(route('profile.destro'), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value.focus(),
@@ -78,16 +78,17 @@ const closeModal = () => {
                 </div>
 
                 <div class="mt-6 flex justify-end">
+                    <DangerButton class="mr-3"> Contact Admin </DangerButton> 
                     <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
 
-                    <DangerButton
+                    <!-- <DangerButton
                         class="ms-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
                         Delete Account
-                    </DangerButton>
+                    </DangerButton> -->
                 </div>
             </div>
         </Modal>

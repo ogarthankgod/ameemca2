@@ -8,9 +8,18 @@ import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import SideBar from "@/Components/SideBar/SideBar.vue";
 
+//Importing FlowBite Components
+import { onMounted } from "vue";
+import { initFlowbite } from "flowbite";
+
 const props = defineProps({
     name: String,
     fullname: String,
+});
+
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initFlowbite();
 });
 </script>
 
@@ -188,7 +197,7 @@ const props = defineProps({
                                                         route('profile.edit')
                                                     "
                                                 >
-                                                    Profile
+                                                    Edit Profile
                                                 </DropdownLink>
                                                 <DropdownLink
                                                     :href="route('logout')"
@@ -211,10 +220,10 @@ const props = defineProps({
         <!-- Page Content -->
         <main class="flex">
             <SideBar />
-            <section class="max-w-screen-xl w-full">
+            <section class="max-w-screen-xl w-full mx-auto px-3 sm:px-[3rem]">
                 <!-- Page Heading -->
                 <header class="" v-if="$slots.header">
-                    <div class="max-w-7xl mx-auto pt-6 px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-7xl mx-auto mt-4 :sm:px-6 :lg:px-8 mb-3">
                         <slot name="header" />
                     </div>
                 </header>
