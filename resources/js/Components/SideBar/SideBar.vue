@@ -200,9 +200,9 @@ const sidebarItems2 = [
             >
                 <li>
                     <Link
-                        href="#"
                         class="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
                         v-for="item in sidebarItems2"
+                        :href="route(item.route)"
                     >
                         <v-icon
                             :name="item.icon"

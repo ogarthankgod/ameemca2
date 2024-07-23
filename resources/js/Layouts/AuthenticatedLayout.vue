@@ -27,7 +27,7 @@ onMounted(() => {
     <div class="max-w-7xl mx-auto min-h-screen">
         <div class="h-16 mb-2">
             <nav
-                class="max-w-screen-xl fixed top-0 z-50 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 w-full"
+                class="max-w-7xl fixed top-0 z-50 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 w-full"
                 style=""
             >
                 <div class="px-3 py-3 lg:px-5 lg:pl-3">

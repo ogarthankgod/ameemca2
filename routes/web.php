@@ -61,7 +61,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('guidlines', function() {
         return '{{OP.Guidlines}}'; 
-    })->name('guidlines');
+    })->name('guidelines');
 
     Route::get('Finance', function() {
         return 'Wallet not Found!'; 
