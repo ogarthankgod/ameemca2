@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\support_tickets;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SupportTicketsController extends Controller
 {
@@ -13,7 +14,7 @@ class SupportTicketsController extends Controller
     public function index()
     {
         //
-        return "#1901 - Database is empty";
+        return Inertia::render("Support/Index");
     }
 
     /**

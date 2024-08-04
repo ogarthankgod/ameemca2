@@ -83,7 +83,7 @@ const submit = () => {
                             Sign in to AMEEMCA!
                         </h1>
 
-                        <p class="mt-4 leading-relaxed text-gray-500">...</p>
+                        <p class="mt-4 leading-relaxed text-red-600"> "Login Using Maintenance Account!"...</p>
                     </div>
 
                     <form
