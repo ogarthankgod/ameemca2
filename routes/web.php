@@ -47,24 +47,27 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('forum', AmcForumsController::class);
 
-    Route::get('video', function() {
-        return 'Please Connect Video API.'; 
+    Route::get('video', function () {
+        // return 'Please Connect Video API.'; 
+        return Inertia::render('Video/Index', []);
     })->name('video.index');
 
-    Route::get('upgrade', function() {
-        return '...'; 
+    Route::get('upgrade', function () {
+        return '...';
     })->name('upgrade.index');
 
-    Route::get('byelaws', function() {
-        return 'ByeLaws..'; 
+    Route::get('byelaws', function () {
+        // return 'ByeLaws..'; 
+        return Inertia::render("ByeLaws/Index");
     })->name('byelaws');
 
-    Route::get('guidlines', function() {
-        return '{{OP.Guidlines}}'; 
+    Route::get('guidlines', function () {
+        // return '{{OP.Guidlines}}'; 
+        return Inertia::render("Guidelines/Index");
     })->name('guidelines');
 
-    Route::get('Finance', function() {
-        return 'Wallet not Found!'; 
+    Route::get('Finance', function () {
+        return 'Wallet not Found!';
     })->name('finance.index');
 
     // Route::get('support', function() {

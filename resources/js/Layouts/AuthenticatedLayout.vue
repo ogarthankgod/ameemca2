@@ -7,6 +7,7 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import SideBar from "@/Components/SideBar/SideBar.vue";
+// import SectionHead from "./SectionHead.vue";
 
 //Importing FlowBite Components
 import { onMounted } from "vue";
@@ -222,11 +223,7 @@ onMounted(() => {
             <SideBar />
             <section class="max-w-screen-xl w-full mx-auto px-3 sm:px-[3rem]">
                 <!-- Page Heading -->
-                <header class="" v-if="$slots.header">
-                    <div class="max-w-7xl mx-auto mt-4 :sm:px-6 :lg:px-8 mb-3">
-                        <slot name="header" />
-                    </div>
-                </header>
+                <!-- <SectionHead text=""/> -->
                 <slot />
             </section>
         </main>

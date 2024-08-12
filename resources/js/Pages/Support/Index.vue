@@ -1,6 +1,11 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import SectionHead from "@/Layouts/SectionHead.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
+
+defineOptions({
+    layout: AuthenticatedLayout
+});
 
 import {
     MdMarkemailunreadRound,
@@ -28,14 +33,8 @@ const categories = ["Account", "Loan", "Payment", "Video", "Investment"];
 
 <template>
     <Head title="Support" />
-
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Support
-            </h2>
-        </template>
-
+        <SectionHead text="Support" />
+        
         <section class="flex-col w-full mb-6">
             <div
                 class="flex flex-col sm:flex-row space-x-0 sm:space-x-3 mb-0 w-full"
@@ -213,5 +212,5 @@ const categories = ["Account", "Loan", "Payment", "Video", "Investment"];
                 </div>
             </article>
         </section>
-    </AuthenticatedLayout>
+    
 </template>

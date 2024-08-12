@@ -9,8 +9,8 @@ defineOptions({
 </script>
 
 <template>
-    <Head title="Bye Laws" />
-    <SectionHead text="Bye Laws" />
+    <Head title="Operational Guidelines" />
+    <SectionHead text="Opertional Guidelines" />
 
 </template>
  
