@@ -1,15 +1,11 @@
 <script setup>
-// import IndexLayout from "@/Layouts/Index.vue";
+import IndexLayout from "@/Layouts/Index.vue";
 import SectionHead from "@/Layouts/SectionHead.vue";
 import { Head, Link } from "@inertiajs/vue3";
 
-// defineOptions({
-//     layout: IndexLayout,
-// });
-
-// defineProps({
-//     messageId: Number
-// });
+defineOptions({
+    layout: IndexLayout,
+});
 </script>
 
 <template>
@@ -18,6 +14,7 @@ import { Head, Link } from "@inertiajs/vue3";
     <!-- Support Mail -->
     <div
         class="flex gap-3 border border-gray-200 rounded-lg p-2 mb-2"
+        v-for="categoryx in categories"
     >
         <div class="w-fit p-4">
             <img
@@ -39,7 +36,8 @@ import { Head, Link } from "@inertiajs/vue3";
             </p>
             <p>
                 <span class="text-sm text-gray-700">
-                    Viewing message from SHOW
+                    I have been trying to make a transaction to the app and it
+                    has been showing a failed alert...
                 </span>
             </p>
             <p class="text-xs text-gray-500 mt-1">

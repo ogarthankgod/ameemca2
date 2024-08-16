@@ -4,6 +4,7 @@ use App\Http\Controllers\AmcPostsController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AmcForumsController;
+use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\SupportTicketsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -48,7 +49,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('forum', AmcForumsController::class);
 
     Route::get('video', function () {
-        // return 'Please Connect Video API.'; 
         return Inertia::render('Video/Index', []);
     })->name('video.index');
 
@@ -57,28 +57,22 @@ Route::middleware('auth')->group(function () {
     })->name('upgrade.index');
 
     Route::get('byelaws', function () {
-        // return 'ByeLaws..'; 
         return Inertia::render("ByeLaws/Index");
     })->name('byelaws');
 
-    Route::get('guidlines', function () {
-        // return '{{OP.Guidlines}}'; 
+    Route::get('guidelines', function () {
         return Inertia::render("Guidelines/Index");
     })->name('guidelines');
 
-    Route::get('Finance', function () {
-        return 'Wallet not Found!';
-    })->name('finance.index');
-
-    // Route::get('support', function() {
-    //     return "Database is empty!"; 
-    // })->name('support.index');
-
+    Route::get('objectives', function () {
+        return Inertia::render("Objectives/Index");
+    })->name('objectives');
 
     Route::resource('post', AmcPostsController::class);
 
     Route::resource('support', SupportTicketsController::class);
-});
 
+    Route::resource("finance", FinanceController::class);
+});
 
 require __DIR__ . '/auth.php';

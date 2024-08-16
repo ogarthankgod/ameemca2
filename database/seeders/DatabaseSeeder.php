@@ -17,14 +17,6 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         User_type::insert([
             [
-                'type' => 'user',
-                'email' => 'staff@ameemca.com',
-                'title' => 'Staff',
-                'comment' => 'Staff',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
                 'type' => 'admin',
                 'email' => 'president@ameemca.com',
                 'title' => 'President',
@@ -55,7 +47,15 @@ class DatabaseSeeder extends Seeder
                 'comment' => 'Treasurer',
                 'created_at' => now(),
                 'updated_at' => now()
-            ]
+            ],
+            [
+                'type' => 'user',
+                'email' => 'staff@ameemca.com',
+                'title' => 'Staff',
+                'comment' => 'Staff',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
         ]);
     }
 }

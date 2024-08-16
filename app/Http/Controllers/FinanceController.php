@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\support_tickets;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class SupportTicketsController extends Controller
+class FinanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class SupportTicketsController extends Controller
     public function index()
     {
         //
-        return Inertia::render("Support/Index");
+        return Inertia::render("Finance/Index");
     }
 
     /**
@@ -36,18 +35,15 @@ class SupportTicketsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Support_tickets $support_tickets)
+    public function show(string $id)
     {
         //
-        // return Inertia::render("Support/Show", [
-        //     "messageId" => 1,
-        // ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Support_tickets $support_tickets)
+    public function edit(string $id)
     {
         //
     }
@@ -55,7 +51,7 @@ class SupportTicketsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Support_tickets $support_tickets)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -63,7 +59,7 @@ class SupportTicketsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Support_tickets $support_tickets)
+    public function destroy(string $id)
     {
         //
     }
