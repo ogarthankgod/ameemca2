@@ -12,8 +12,20 @@ class FinanceController extends Controller
      */
     public function index()
     {
-        //
-        return Inertia::render("Finance/Index");
+        $hour = now()->format('H');
+        $time = date("H:i:s a", time());
+        
+        if ($hour < 12) {
+            $greeting = "Good Morning";
+        } elseif ($hour < 18) {
+            $greeting = "Good Afternoon";
+        } else {
+            $greeting = "Good Evening";
+        }
+        return Inertia::render("Finance/Index", [
+            "greeting" => $greeting,
+            "time" => $time
+        ]);
     }
 
     /**

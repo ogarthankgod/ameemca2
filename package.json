@@ -22,6 +22,7 @@
     "dependencies": {
         "@headlessui/vue": "^1.7.22",
         "@vuestic/tailwind": "^0.1.5",
+        "billboard.js": "^3.12.4",
         "chart.js": "^4.4.3",
         "dayjs": "^1.11.11",
         "flowbite": "^2.3.0",

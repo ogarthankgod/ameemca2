@@ -2,7 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SectionHead from "@/Layouts/SectionHead.vue";
 import { Head, usePage } from "@inertiajs/vue3";
-import { BarChart } from "@/Components/BarChart.vue";
+import UserInformation from "./Profile/Partials/UserInformation.vue";
 
 import {
   GiReceiveMoney,
@@ -40,6 +40,14 @@ defineOptions({
 
   <section class="flex-col w-full">
     <h2 class="hidden font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+
+    <div class="py-4 mx-auto">
+      <div class="max-w-7xl mx-auto :sm:px-6 :lg:px-8 space-y-6">
+        <div class="p-4 sm:p-8 bg-white shadow rounded-md sm:rounded-lg">
+          <UserInformation class="max-w-xl" />
+        </div>
+      </div>
+    </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
       <!-- Balance Card -->
