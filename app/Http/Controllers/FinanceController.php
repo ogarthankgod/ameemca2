@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,7 +11,7 @@ class FinanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $hour = now()->format('H');
         $time = date("H:i:s a", time());
@@ -22,9 +23,13 @@ class FinanceController extends Controller
         } else {
             $greeting = "Good Evening";
         }
+
+        $user = User::find($request->user());
+
         return Inertia::render("Finance/Index", [
             "greeting" => $greeting,
-            "time" => $time
+            "time" => $time,
+            "walletInfo" => "{''}"
         ]);
     }
 

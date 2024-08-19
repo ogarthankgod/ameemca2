@@ -31,7 +31,6 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $user = $request->user();
-        $userPackage = Package::find($user->package);
         return [
             ...parent::share($request),
             'auth' => [
@@ -47,7 +46,7 @@ class HandleInertiaRequests extends Middleware
                     'fullname' => $user?->firstname . ' ' . $user?->lastname,
                     'img' => $user?->photo ?? 'NIL',
                     'empId' => $user?->employee_number ?? 'NIL',
-                    'package' => $userPackage->package_name ?? 'NIL',
+                    'package' => Package::find($user->package)->package_name ?? 'NIL',
                     'allotment' => "₦".number_format($user?->allotment_amount, 2) ?? '0.00',
                     'doe' => $user?->date_of_employment ?? 'NIL',
                     'agency' => $user?->agency_bureau ?? 'NIL',
