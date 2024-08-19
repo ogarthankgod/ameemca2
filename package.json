@@ -8,6 +8,7 @@
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
         "@tailwindcss/forms": "^0.5.3",
+        "@types/node": "^22.4.1",
         "@vitejs/plugin-vue": "^5.0.0",
         "autoprefixer": "^10.4.19",
         "axios": "^1.6.4",
@@ -21,11 +22,13 @@
     "dependencies": {
         "@headlessui/vue": "^1.7.22",
         "@vuestic/tailwind": "^0.1.5",
+        "chart.js": "^4.4.3",
         "dayjs": "^1.11.11",
         "flowbite": "^2.3.0",
         "flowbite-vue": "^0.1.5",
         "oh-vue-icons": "^1.0.0-rc3",
         "pinia": "^2.1.7",
+        "vue-chartjs": "^5.3.1",
         "vue-router": "^4.3.2",
         "vuestic-ui": "^1.9.10"
     }
