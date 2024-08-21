@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account_balance;
+use App\Models\Contributions;
+use App\Models\Loan_balance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,12 +27,19 @@ class FinanceController extends Controller
             $greeting = "Good Evening";
         }
 
-        $user = User::find($request->user());
+        $user = User::find($request->user()->id);
+        $staffid = $user->staffid;
+        $accountBalance = Account_balance::where("staffid", $staffid)->first()->balance;
+        $contributionBalance = Contributions::where("staffid", $staffid)->sum('amount');
+        $loanBalance = Loan_balance::where("staffid", $staffid)->sum('balance');
 
         return Inertia::render("Finance/Index", [
             "greeting" => $greeting,
             "time" => $time,
-            "walletInfo" => "{''}"
+            "income" => "NIL",
+            "accountBalance" => number_format($accountBalance, 2),
+            "loanBalance" => number_format($loanBalance, 2),
+            "contributionBalance" => number_format($contributionBalance, 2),
         ]);
     }
 

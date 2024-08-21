@@ -13,105 +13,13 @@ defineOptions({
 defineProps({
   greeting: String,
   time: String,
-  walletInfo: Object,
+  accountBalance: String,
+  income: String,
+  loanBalance: String,
+  contributionBalance: String,
 });
 
 const user = usePage().props.auth.user;
-
-// for ESM environment, need to import modules as:
-// import bb, {area, areaSpline} from "billboard.js";
-
-// var chart = bb.generate({
-//   bindto: "#chart",
-
-//   data: {
-//     columns: [
-//       ["data1", 300, 350, 300, 0, 0, 0],
-//       ["data2", 130, 100, 140, 200, 150, 50],
-//     ],
-//     types: {
-//       data1: area(), // for ESM specify as: area()
-//       data2: areaSpline(), // for ESM specify as: areaSpline()
-//     },
-//   },
-// });
-// chart.data("data1");
-// var chart = bb.generate({
-//   data: {
-//     x: "x",
-//     columns: [
-//       [
-//         "x",
-//         "2024-01-01",
-//         "2024-01-02",
-//         "2024-01-03",
-//         "2024-01-04",
-//         "2024-01-05",
-//         "2024-01-06",
-//       ],
-//       [
-//         "Transactions",
-//         [15000, 14000, 11000],
-//         [15500, 13000, 11500],
-//         [16000, 13500, 12000],
-//         [13500, 12000, 11000],
-//         [18000, 15000, 13000],
-//         [19900, 16000, 12500],
-//       ],
-//       ["Contributions", 13000, 34000, 20000, 50000, 25000, 35000],
-//     ],
-//     types: {
-//       Transactions: areaLineRange(),
-//     },
-//   },
-//   axis: {
-//     x: {
-//       type: "timeseries",
-//       tick: {
-//         format: "%Y-%m-%d",
-//       },
-//     },
-//   },
-//   bindto: "#areaRangeChart",
-// });
-
-// setTimeout(function () {
-//   chart.load({
-//     columns: [
-//       [
-//         "data3",
-//         [220, 215, 205],
-//         [240, 225, 215],
-//         [260, 235, 225],
-//         [280, 245, 235],
-//         [270, 255, 225],
-//         [240, 225, 215],
-//       ],
-//     ],
-//     types: {
-//       data3: areaSplineRange(), // for ESM specify as: areaSplineRange()
-//     },
-//   });
-// }, 1000);
-
-// setTimeout(function () {
-//   chart.load({
-//     columns: [
-//       [
-//         "data4",
-//         { high: 155, low: 145, mid: 150 },
-//         { high: 200, mid: 190, low: 150 },
-//         { high: 230, mid: 215, low: 200 },
-//         { high: 210, mid: 200, low: 180 },
-//         { high: 220, mid: 210, low: 190 },
-//         { high: 200, mid: 180, low: 160 },
-//       ],
-//     ],
-//     types: {
-//       data4: areaSplineRange(), // for ESM specify as: areaSplineRange()
-//     },
-//   });
-// }, 1500);
 </script>
 
 <template>
@@ -131,7 +39,7 @@ const user = usePage().props.auth.user;
       </div>
       <div>
         <p class="text-sm text-gray-500">My Balance</p>
-        <p class="text-sm font-bold">₦ {{ walletInfo }}</p>
+        <p class="text-sm font-bold">₦ {{ accountBalance }}</p>
       </div>
     </div>
 
@@ -143,7 +51,7 @@ const user = usePage().props.auth.user;
       </div>
       <div>
         <p class="text-sm text-gray-500">Income (ROI)</p>
-        <p class="text-sm font-bold text-green-400">+₦975,600.00</p>
+        <p class="text-sm font-bold text-green-400">+70%</p>
       </div>
     </div>
 
@@ -155,7 +63,7 @@ const user = usePage().props.auth.user;
       </div>
       <div>
         <p class="text-sm text-gray-500">Loan</p>
-        <p class="text-sm font-bold text-red-400">-₦3,460,000.00</p>
+        <p class="text-sm font-bold text-red-400">-₦ {{ loanBalance }}</p>
       </div>
     </div>
 
@@ -166,8 +74,8 @@ const user = usePage().props.auth.user;
         <i class="fas fa-piggy-bank text-teal-500"></i>
       </div>
       <div>
-        <p class="text-sm text-gray-500">Total Savings</p>
-        <p class="text-sm font-bold">₦7,920,000.00</p>
+        <p class="text-sm text-gray-500">Contribution Balance</p>
+        <p class="text-sm font-bold">₦ {{ contributionBalance }}</p>
       </div>
     </div>
   </div>

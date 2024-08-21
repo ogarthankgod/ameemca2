@@ -6,7 +6,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AmcForumsController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\SupportTicketsController;
+use App\Models\Account_balance;
+use App\Models\Contributions;
+use App\Models\Loan_balance;
+use App\Models\User;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -35,8 +40,32 @@ Route::post('/contact', [GuestController::class, 'sendEnquiry'])->name('contact.
 //No Auth Guest Pages END;
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', []);
+Route::get('/dashboard', function (Request $request) {
+    $hour = now()->format('H');
+    $time = date("H:i:s a", time());
+    
+    if ($hour < 12) {
+        $greeting = "Good Morning";
+    } elseif ($hour < 18) {
+        $greeting = "Good Afternoon";
+    } else {
+        $greeting = "Good Evening";
+    }
+    
+    $user = User::find($request->user()->id);
+    $staffid = $user->staffid;
+    $accountBalance = Account_balance::where("staffid", $staffid)->first()->balance;
+    $contributionBalance = Contributions::where("staffid", $staffid)->sum('amount');
+    $loanBalance = Loan_balance::where("staffid", $staffid)->sum('balance');
+
+    return Inertia::render('Dashboard', [
+        "greeting" => $greeting,
+        "time" => $time,
+        "income" => "NIL",
+        "accountBalance" => number_format($accountBalance, 2),
+        "loanBalance" => number_format($loanBalance, 2),
+        "contributionBalance" => number_format($contributionBalance, 2),
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 

@@ -32,6 +32,15 @@ const user = usePage().props.auth.user;
 defineOptions({
   layout: AuthenticatedLayout,
 });
+
+defineProps({
+  greeting: String,
+  time: String,
+  accountBalance: String,
+  income: String,
+  loanBalance: String,
+  contributionBalance: String,
+});
 </script>
 
 <template>
@@ -58,7 +67,7 @@ defineOptions({
         </div>
         <div>
           <p class="text-sm text-gray-500">My Balance</p>
-          <p class="text-sm font-bold">₦12,750,000.00</p>
+          <p class="text-sm font-bold">₦{{ accountBalance }}</p>
         </div>
       </div>
 
@@ -70,7 +79,7 @@ defineOptions({
         </div>
         <div>
           <p class="text-sm text-gray-500">Income (ROI)</p>
-          <p class="text-sm font-bold text-green-400">+₦975,600.00</p>
+          <p class="text-sm font-bold text-green-400">+70%</p>
         </div>
       </div>
 
@@ -82,7 +91,7 @@ defineOptions({
         </div>
         <div>
           <p class="text-sm text-gray-500">Loan</p>
-          <p class="text-sm font-bold text-red-400">-₦3,460,000.00</p>
+          <p class="text-sm font-bold text-red-400">-₦ {{ loanBalance }}</p>
         </div>
       </div>
 
@@ -93,8 +102,8 @@ defineOptions({
           <i class="fas fa-piggy-bank text-teal-500"></i>
         </div>
         <div>
-          <p class="text-sm text-gray-500">Total Savings</p>
-          <p class="text-sm font-bold">₦7,920,000.00</p>
+          <p class="text-sm text-gray-500">Contribution Balance</p>
+          <p class="text-sm font-bold">₦ {{ contributionBalance }}</p>
         </div>
       </div>
     </div>

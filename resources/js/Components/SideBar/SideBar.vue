@@ -52,26 +52,38 @@ const sidebarItems1 = [
     icon: "fa-piggy-bank",
     text: "Finance",
   },
-  // {
-  //   id: 2,
-  //   route: "finance.index",
-  //   icon: "fa-piggy-bank",
-  //   text: "Finance",
-  //   children: [
-  //     {
-  //       id: 1,
-  //       route: "finance.index",
-  //       icon: "FaChartPie",
-  //       text: "Loans",
-  //     },
-  //     {
-  //       id: 2,
-  //       route: "finance.index",
-  //       icon: "FaChartPie",
-  //       text: "Loan History",
-  //     },
-  //   ],
-  // },
+  {
+    id: 21,
+    route: "finance.index",
+    icon: "fa-piggy-bank",
+    text: "Loans",
+    children: [
+      {
+        id: 1,
+        route: "finance.index",
+        icon: "FaChartPie",
+        text: "Loan Request",
+      },
+      {
+        id: 2,
+        route: "finance.index",
+        icon: "FaChartPie",
+        text: "Loan History",
+      },
+      {
+        id: 3,
+        route: "finance.index",
+        icon: "FaChartPie",
+        text: "Loan Repayments",
+      },
+      {
+        id: 4,
+        route: "finance.index",
+        icon: "FaChartPie",
+        text: "Bulk Loan Repayments",
+      },
+    ],
+  },
   {
     id: 3,
     route: "forum.index",
@@ -196,7 +208,7 @@ const sidebarItems2 = [
             <li v-for="child in item.children">
               <Link
                 :href="route(child.route)"
-                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 text-sm"
                 >{{ child.text }}</Link
               >
             </li>
