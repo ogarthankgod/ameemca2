@@ -36,7 +36,7 @@ class FinanceController extends Controller
         return Inertia::render("Finance/Index", [
             "greeting" => $greeting,
             "time" => $time,
-            "income" => "NIL",
+            "investment" => "NIL",
             "accountBalance" => number_format($accountBalance, 2),
             "loanBalance" => number_format($loanBalance, 2),
             "contributionBalance" => number_format($contributionBalance, 2),

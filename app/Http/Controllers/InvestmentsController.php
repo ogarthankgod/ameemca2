@@ -2,18 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Inertia\Inertia;
+use App\Models\investments;
+use App\Models\Contributions;
 use App\Http\Requests\StoreinvestmentsRequest;
 use App\Http\Requests\UpdateinvestmentsRequest;
-use App\Models\investments;
+use App\Models\Account_balance;
+use Illuminate\Http\Request;
 
 class InvestmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $user = User::find($request->user()->id);
+        $staffid = $user->staffid;
+        $accountBalance = Account_balance::where("staffid", $staffid)->first()->balance;
+        $contributionBalance = Contributions::where("staffid", $staffid)->sum('amount');
+    
+        return Inertia::render("Investments/Index", [
+            "contributionBalance" => $contributionBalance,
+        ]);
     }
 
     /**

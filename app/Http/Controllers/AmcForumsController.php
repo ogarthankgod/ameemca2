@@ -16,11 +16,11 @@ class AmcForumsController extends Controller
     {
         $forums = amc_forums::paginate();
 
-        // return Inertia::render("Forum/Index", [
-        //     "forums" => $forums
-        // ]);
+        return Inertia::render("Forum/Index", [
+            "forums" => $forums
+        ]);
 
-        return "Could not connect to Database.";
+        // return "Could not connect to Database.";
     }
 
     /**

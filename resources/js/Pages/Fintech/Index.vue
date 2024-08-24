@@ -35,9 +35,6 @@ addIcons(
   FcSimCardChip
 );
 
-// import bb, { area, areaSpline, areaLineRange, areaSplineRange } from "billboard.js";
-// import "billboard.js/dist/billboard.css";
-
 defineOptions({
   layout: AuthenticatedLayout,
 });
@@ -55,12 +52,10 @@ const user = usePage().props.auth.user;
 </script>
 
 <template>
-  <Head title="Wallet Dashboard" />
-  <SectionHead text="Wallet" />
+  <Head title="VTU Dashboard" />
+  <SectionHead text="VTU Services" />
 
-  <div class="bg-white rounded-md p-5 mb-5">
-    {{ greeting }}, {{ user.firstname }} ..<br />
-  </div>
+  <div class="bg-white rounded-md p-5 mb-5">Howdy, {{ user.firstname }} ..<br /></div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
     <!-- Balance Card -->
@@ -70,44 +65,20 @@ const user = usePage().props.auth.user;
         <!-- <i class="fas fa-wallet text-yellow-500"></i> -->
       </div>
       <div>
-        <p class="text-sm text-gray-500">My Balance</p>
-        <p class="text-sm font-bold">₦ {{ accountBalance }}</p>
+        <p class="text-sm text-gray-500">VTU Wallet</p>
+        <p class="text-sm font-bold">₦ 0.00</p>
       </div>
     </div>
 
-    <!-- Income Card -->
-    <div class="bg-white p-2 rounded-lg shadow-sm flex items-center space-x-3">
-      <div class="bg-blue-100 p-3 rounded-full">
-        <v-icon name="gi-receive-money" class="flex-shrink-0 w-5 h-5 text-blue-500" />
-        <!-- <i class="fas fa-hand-holding-usd text-blue-500"></i> -->
-      </div>
-      <div>
-        <p class="text-sm text-gray-500">Income (ROI)</p>
-        <p class="text-sm font-bold text-green-400">+70%</p>
-      </div>
-    </div>
-
-    <!-- Expense Card -->
+    <!-- Expenses Card -->
     <div class="bg-white p-2 rounded-lg shadow-sm flex items-center space-x-3">
       <div class="bg-pink-100 p-3 rounded-full">
         <v-icon name="gi-money-stack" class="flex-shrink-0 w-5 h-5 text-red-400" />
         <!-- <i class="fas fa-money-bill-wave text-pink-500"></i> -->
       </div>
       <div>
-        <p class="text-sm text-gray-500">Loan</p>
-        <p class="text-sm font-bold text-red-400">-₦ {{ loanBalance }}</p>
-      </div>
-    </div>
-
-    <!-- Total Saving Card -->
-    <div class="bg-white p-2 rounded-lg shadow-sm flex items-center space-x-3">
-      <div class="bg-teal-100 p-3 rounded-full">
-        <v-icon name="gi-swap-bag" class="flex-shrink-0 w-5 h-5 text-teal-500" />
-        <i class="fas fa-piggy-bank text-teal-500"></i>
-      </div>
-      <div>
-        <p class="text-sm text-gray-500">Contribution Balance</p>
-        <p class="text-sm font-bold">₦ {{ contributionBalance }}</p>
+        <p class="text-sm text-gray-500">VTU Expenses</p>
+        <p class="text-sm font-bold text-red-400">-₦ 0.00</p>
       </div>
     </div>
   </div>
@@ -119,7 +90,7 @@ const user = usePage().props.auth.user;
     class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-5"
     type="button"
   >
-    Deposit
+    Top Up VTU Wallet
   </button>
 
   <!-- Main modal -->
@@ -136,9 +107,7 @@ const user = usePage().props.auth.user;
         <div
           class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
         >
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-            Deposit into Wallet
-          </h3>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">VTU Wallet</h3>
 
           <button
             type="button"
@@ -168,32 +137,16 @@ const user = usePage().props.auth.user;
           <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2 sm:col-span-2">
               <label
-                for="category"
+                for="amount"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Category</label
-              >
-              <select
-                id="category"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              >
-                <option selected="">Select category</option>
-                <option value="1">Savings Wallet</option>
-                <option value="2">Manual Contribution</option>
-              </select>
-            </div>
-
-            <div class="col-span-2 sm:col-span-2">
-              <label
-                for="price"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Price</label
+                >Amount</label
               >
               <input
                 type="number"
-                name="price"
-                id="price"
+                name="amount"
+                id="amount"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="$2999"
+                placeholder="₦1000.00"
                 required=""
               />
             </div>
@@ -202,7 +155,7 @@ const user = usePage().props.auth.user;
               <label
                 for="description"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Description</label
+                >Description/Remark</label
               >
               <textarea
                 id="description"
@@ -228,15 +181,10 @@ const user = usePage().props.auth.user;
                 clip-rule="evenodd"
               ></path>
             </svg>
-            Deposit
+            Top Up
           </button>
         </form>
       </div>
     </div>
-  </div>
-
-  <!-- Markup -->
-  <div class="p-5 bg-white rounded-md chart_area">
-    <div id="chart" class="chart"></div>
   </div>
 </template>

@@ -37,7 +37,7 @@ defineProps({
   greeting: String,
   time: String,
   accountBalance: String,
-  income: String,
+  investment: String,
   loanBalance: String,
   contributionBalance: String,
 });
@@ -50,7 +50,7 @@ defineProps({
   <section class="flex-col w-full">
     <h2 class="hidden font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
 
-    <div class="py-4 mx-auto">
+    <div class="py-4 mx-auto hidden">
       <div class="max-w-7xl mx-auto :sm:px-6 :lg:px-8 space-y-6">
         <div class="p-4 sm:p-8 bg-white shadow rounded-md sm:rounded-lg">
           <UserInformation class="max-w-xl" />
@@ -71,15 +71,15 @@ defineProps({
         </div>
       </div>
 
-      <!-- Income Card -->
+      <!-- Investments Card -->
       <div class="bg-white p-2 rounded-lg shadow-sm flex items-center space-x-3">
         <div class="bg-blue-100 p-3 rounded-full">
           <v-icon name="gi-receive-money" class="flex-shrink-0 w-5 h-5 text-blue-500" />
           <!-- <i class="fas fa-hand-holding-usd text-blue-500"></i> -->
         </div>
         <div>
-          <p class="text-sm text-gray-500">Income (ROI)</p>
-          <p class="text-sm font-bold text-green-400">+70%</p>
+          <p class="text-sm text-gray-500">Investments (ROI)</p>
+          <p class="text-sm font-bold text-green-400">+20%</p>
         </div>
       </div>
 
@@ -114,7 +114,7 @@ defineProps({
         <div>
           <p class="text-sm text-gray-500">Investments</p>
 
-          <p class="text-sm font-medium text-gray-900">₦240,896,000.94</p>
+          <p class="text-sm font-medium text-gray-900">₦2,896,000.94</p>
         </div>
 
         <span class="rounded-full bg-blue-100 p-3 text-blue-600">
@@ -187,8 +187,8 @@ defineProps({
     </div>
 
     <!-- Transactions List -->
-    <section class="flex space-x-4 max-w-full mb-7">
-      <div class="max-w-full w-full md:w-3/4">
+    <section class="flex space-x-4 max-w-full mb-7 justify-center">
+      <div class="max-w-full w-full">
         <table class="bg-white w-full rounded-lg">
           <tbody>
             <tr>
@@ -234,6 +234,7 @@ defineProps({
           <span class="hover:underline font-medium text-sm pr-3 pt-2 p-1">View all</span>
         </div>
       </div>
+      <!-- 
       <div
         class="h-full bg-gradient-to-r from-blue-400 to-blue-600 text-white p-6 rounded-lg shadow-lg w-[40%] hidden md:flex"
       >
@@ -264,17 +265,9 @@ defineProps({
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </section>
 
     <div class="flex flex-col md:flex-row gap-4"></div>
-
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 text-gray-900">You're logged in!</div>
-        </div>
-      </div>
-    </div>
   </section>
 </template>

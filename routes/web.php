@@ -5,6 +5,9 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AmcForumsController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\FintechController;
+use App\Http\Controllers\InvestmentsController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\SupportTicketsController;
 use App\Models\Account_balance;
 use App\Models\Contributions;
@@ -76,6 +79,22 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('forum', AmcForumsController::class);
+    
+    // Route::get('/loan', [LoanController::class, 'index'])->name('loan.index');
+    // Route::get('/loan/create', [LoanController::class, 'create'])->name('loan.create');
+    // Route::post('/loan', [LoanController::class, 'store'])->name('loan.store');
+    // Route::post('/loan/{id}', [LoanController::class, 'show'])->name('loan.show');
+    // Route::get('/loan/{id}/edit', [LoanController::class, 'edit'])->name('loan.edit');
+    // Route::put('/loan/{id}', [LoanController::class, 'update'])->name('loan.update');
+
+    Route::get('loan/request', [LoanController::class, 'request'])->name("loan.request");
+    Route::get('loan/history', [LoanController::class, 'history'])->name("loan.history");
+    Route::get('loan/repayments', [LoanController::class, 'repayments'])->name("loan.repayments");
+    Route::get('loan/bulkrepayments', [LoanController::class, 'bulkLoanRepayments'])->name("loan.bulkrepayments");
+    Route::get('loan/fetch/{loanId}', [LoanController::class, 'fetch'])->name('loan.fetch');
+
+    Route::resource('loan', LoanController::class);
+
 
     Route::get('video', function () {
         return Inertia::render('Video/Index', []);
@@ -99,9 +118,14 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('post', AmcPostsController::class);
 
+    //Create, Show, Edit the Support ticket
     Route::resource('support', SupportTicketsController::class);
 
     Route::resource("finance", FinanceController::class);
+
+    Route::resource("fintech", FintechController::class);
+
+    Route::resource("investments", InvestmentsController::class);
 });
 
 require __DIR__ . '/auth.php';

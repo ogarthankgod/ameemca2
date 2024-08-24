@@ -16,6 +16,9 @@ import {
   OiLaw,
   RiRoadMapFill,
   GiFlagObjective,
+  AiOpenDataSquare,
+  GiTakeMyMoney,
+  GiReceiveMoney,
 } from "oh-vue-icons/icons";
 import { addIcons } from "oh-vue-icons";
 
@@ -31,7 +34,10 @@ addIcons(
   MdSupportagentRound,
   OiLaw,
   RiRoadMapFill,
-  GiFlagObjective
+  GiFlagObjective,
+  AiOpenDataSquare,
+  GiTakeMyMoney,
+  GiReceiveMoney
 );
 
 // initialize components based on data attribute selectors
@@ -48,41 +54,53 @@ const sidebarItems1 = [
   },
   {
     id: 2,
-    route: "finance.index",
-    icon: "fa-piggy-bank",
-    text: "Finance",
+    route: "fintech.index",
+    icon: "ai-open-data-square",
+    text: "VTU Dashboard",
   },
   {
-    id: 21,
+    id: 3,
     route: "finance.index",
     icon: "fa-piggy-bank",
+    text: "Wallet",
+  },
+  {
+    id: 4,
+    route: "loan.index",
+    icon: "gi-take-my-money",
     text: "Loans",
     children: [
       {
         id: 1,
-        route: "finance.index",
+        route: "loan.request",
         icon: "FaChartPie",
         text: "Loan Request",
       },
       {
         id: 2,
-        route: "finance.index",
+        route: "loan.history",
         icon: "FaChartPie",
         text: "Loan History",
       },
       {
         id: 3,
-        route: "finance.index",
+        route: "loan.repayments",
         icon: "FaChartPie",
         text: "Loan Repayments",
       },
       {
         id: 4,
-        route: "finance.index",
+        route: "loan.bulkrepayments",
         icon: "FaChartPie",
         text: "Bulk Loan Repayments",
       },
     ],
+  },
+  {
+    id: 3,
+    route: "investments.index",
+    icon: "gi-receive-money",
+    text: "Investments",
   },
   {
     id: 3,
