@@ -205,7 +205,7 @@ const user = usePage().props.auth.user;
         />
       </svg>
       <span class="sr-only">Info</span>
-      <div><span class="font-medium">!!</span> Background Jobs is still Compiling.</div>
+      <div><span class="font-medium">!!</span> Background Jobs are still Compiling.</div>
     </div>
   </div>
 </template>
