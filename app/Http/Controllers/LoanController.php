@@ -65,26 +65,26 @@ class LoanController extends Controller
     }
 
     public function request(Request $reequest) {
-        return Inertia::render("Loan/Index", [
-            "pageState" => "Request"
+        return Inertia::render("Loan/LoanRequest", [
+            "pageState" => "Loan Request"
         ]);
     }
     
     public function history(Request $reequest) {
         return Inertia::render("Loan/Index", [
-            "pageState" => "History"
+            "pageState" => "Loan History"
         ]);
     }
 
     public function repayments(Request $reequest) {
         return Inertia::render("Loan/Index", [
-            "pageState" => "Payments"
+            "pageState" => "Loan Payments"
         ]);
     }
 
     public function bulkLoanRepayments(Request $reequest) {
         return Inertia::render("Loan/Index", [
-            "pageState" => "Repayments"
+            "pageState" => "Bulk Loan Repayments"
         ]);
     }
 

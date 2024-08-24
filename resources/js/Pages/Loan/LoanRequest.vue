@@ -46,8 +46,7 @@ const user = usePage().props.auth.user;
 
   <div class="bg-white rounded-md p-5 mb-5">Welcome, {{ user.firstname }} ..<br /></div>
 
-  <SectionHead :text="pageState" />
-
+  <SectionHead text="Loan Request" />
   <div class="bg-white rounded-md p-5 mb-5">..<br /></div>
 
   <div class="grid grid-cols-1 mb-7 opacity-50">

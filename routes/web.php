@@ -101,7 +101,7 @@ Route::middleware('auth')->group(function () {
     })->name('video.index');
 
     Route::get('upgrade', function () {
-        return '...';
+        return Inertia::render("UpgradeP");
     })->name('upgrade.index');
 
     Route::get('byelaws', function () {
