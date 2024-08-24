@@ -69,7 +69,7 @@ const user = usePage().props.auth.user;
     <h1 class="text-gray-500 font-bold text-1xl tracking-wide">Posts</h1>
   </div>
 
-  <div class="flex justify-between grid grid-cols-3 gap-6 m-5 mb-5">
+  <div class="justify-between grid grid-cols m-5 mb-5">
     <!-- START Card component -->
     <Link class="container bg-white shadow-xl rounded-lg p-5" href="#">
       <h1 class="font-bold text-yellow-500">AMEEMCA Package types and their Benefits</h1>

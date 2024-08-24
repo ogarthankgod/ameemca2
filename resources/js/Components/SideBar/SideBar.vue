@@ -169,6 +169,7 @@ const sidebarItems2 = [
             class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
             :href="route(item.route)"
             v-if="!item.children"
+            data-drawer-hide="logo-sidebar"
           >
             <v-icon
               :name="item.icon"
@@ -227,8 +228,10 @@ const sidebarItems2 = [
               <Link
                 :href="route(child.route)"
                 class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 text-sm"
-                >{{ child.text }}</Link
+                data-drawer-hide="logo-sidebar"
               >
+                {{ child.text }}
+              </Link>
             </li>
           </ul>
         </li>
