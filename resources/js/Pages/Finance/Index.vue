@@ -49,48 +49,27 @@ defineProps({
   income: String,
   loanBalance: String,
   contributionBalance: String,
+  response: String,
 });
 
 const user = usePage().props.auth.user;
+const page = usePage().props;
 
 const depositForm = useForm({
-  walletType: "",
+  walletType: "1",
   amount: "",
-  desc: "",
+  realAmount: 0,
+  desc: "EMMANUEL",
   email: user.email,
   transType: "deposit",
 });
 
-const depositSubmit = () => {
-  payWithPaystack;
-  // depositForm.post(route("finance.store"), {
-  // onFinish: console.log("finished deposit"),
-  // });
-};
-
 //PayStack Integration
 const calcPaymentFee = (amount) => {
-  let a = (amount * 1.5) / 100;
-  let b = (a * 1.5) / 100;
-  let c = Math.ceil(a + b);
-
-  if (c <= 1995) {
-    return amount + 100 + c * 100;
-  } else {
-    a = 2000;
-    b = (a * 1.5) / 100;
-    c = (b + a) * 100;
-    return amount * 100 + c;
-  }
-};
-
-function calculatePaymentFee(amount) {
   var a = (amount * 1.5) / 100;
   var b = (a * 1.5) / 100;
   var c = Math.ceil(a + b);
-  // console.log('A = '+a);
-  // console.log('B = '+b);
-  // console.log('C = '+c);
+
   if (c <= 1995) {
     return amount * 100 + c * 100;
   } else {
@@ -99,62 +78,83 @@ function calculatePaymentFee(amount) {
     c = (b + a) * 100;
     return amount * 100 + c;
   }
-}
+};
 
-function payWithPaystack(e) {
-  e.preventDefault();
-  var amount = calculatePaymentFee(document.getElementById("amount").value);
-  var real_amount = document.getElementById("amount").value * 100;
-  let handler = PaystackPop.setup({
-    key: "pk_test_017339973125c877c7ddb9fae77f14e6ad607269",
-    // key: "<?php echo $public_key_live; ?>",
-    email: document.getElementById("email").value,
-    amount: amount,
-    ref: "DEPOSIT_" + Math.floor(Math.random() * 1000000000 + 1),
-    metadata: {
-      custom_fields: [
-        {
-          type: document.getElementById("transType").value,
-          real_amt: real_amount,
-        },
-      ],
-    },
-    onClose: function () {
-      console.log("Transaction Cancelled.");
-    },
-    callback: function (response) {
-      verifyDeposit(response.reference);
-    },
-  });
-  handler.openIframe();
-}
+const depositSubmit = async () => {
+  depositForm.realAmount = amount * 100;
+  depositForm
+    .transform((data) => ({
+      ...data,
+      amount: calcPaymentFee(data.amount),
+    }))
+    .post(route("finance.index"), {
+      onSuccess: () => {
+        const response = JSON.parse(usePage().props.response);
+        const access_code = response.data.access_code;
 
-function verifyDeposit(token) {
-  $.ajax({
-    url: route("finance.deposit"),
-    // url: "authController/deposit_process.php",
-    type: "POST",
-    beforeSend: function () {},
-    data: {
-      action: "verify",
-      token: token,
-    },
-    dataType: "json",
-    success: function (data) {
-      if (data.approved) {
-        $("#depositForm").html(data.notice);
-      }
-      if (data.failed) {
-        $("#depositForm").html(data.notice);
-      }
-      if (data.error) {
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus, errorThrown);
-    },
-  });
-}
+        const popup = new PaystackPop();
+        popup.resumeTransaction(access_code);
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    });
+};
+
+// function payWithPaystack(e) {
+//   e.preventDefault();
+//   var amount = calculatePaymentFee(document.getElementById("amount").value);
+//   var real_amount = document.getElementById("amount").value * 100;
+//   let handler = PaystackPop.setup({
+//     key: "pk_test_017339973125c877c7ddb9fae77f14e6ad607269",
+//     // key: "<?php echo $public_key_live; ?>",
+//     email: document.getElementById("email").value,
+//     amount: amount,
+//     ref: "DEPOSIT_" + Math.floor(Math.random() * 1000000000 + 1),
+//     metadata: {
+//       custom_fields: [
+//         {
+//           type: document.getElementById("transType").value,
+//           real_amt: real_amount,
+//         },
+//       ],
+//     },
+//     onClose: function () {
+//       console.log("Transaction Cancelled.");
+//     },
+//     callback: function (response) {
+//       verifyDeposit(response.reference);
+//     },
+//   });
+//   handler.openIframe();
+// }
+
+// function verifyDeposit(token) {
+//   $.ajax({
+//     url: route("finance.deposit"),
+//     // url: "authController/deposit_process.php",
+//     type: "POST",
+//     beforeSend: function () {},
+//     data: {
+//       action: "verify",
+//       token: token,
+//     },
+//     dataType: "json",
+//     success: function (data) {
+//       if (data.approved) {
+//         $("#depositForm").html(data.notice);
+//       }
+//       if (data.failed) {
+//         $("#depositForm").html(data.notice);
+//       }
+//       if (data.error) {
+//       }
+//     },
+//     error: function (jqXHR, textStatus, errorThrown) {
+//       console.log(textStatus, errorThrown);
+//     },
+//   });
+// }
 </script>
 
 <template>
@@ -292,7 +292,7 @@ function verifyDeposit(token) {
           class="p-4 md:p-5"
           name="depositSubmit"
           id="depositSubmit"
-          @submit.prevent="payWithPaystack"
+          @submit.prevent="depositSubmit"
         >
           <div id="depositForm"></div>
           <ul class="text-xs text-gray-600 mb-5 list-disc list-inside">
@@ -343,9 +343,8 @@ function verifyDeposit(token) {
               >
               <input
                 v-model="depositForm.amount"
-                type="number"
+                type="text"
                 name="amount"
-                min="1000"
                 id="amount"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="₦1,000.00"

@@ -16,6 +16,7 @@ import { initFlowbite } from "flowbite";
 const props = defineProps({
   name: String,
   fullname: String,
+  errors: Object,
 });
 
 // initialize components based on data attribute selectors

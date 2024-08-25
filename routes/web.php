@@ -121,6 +121,7 @@ Route::middleware('auth')->group(function () {
     //Create, Show, Edit the Support ticket
     Route::resource('support', SupportTicketsController::class);
 
+    Route::get('finance/verify', [FinanceController::class, 'verifyTransaction'])->name('finance.verify');
     Route::resource("finance", FinanceController::class);
 
     Route::resource("fintech", FintechController::class);
