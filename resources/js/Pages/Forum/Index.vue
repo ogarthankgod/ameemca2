@@ -27,9 +27,6 @@ addIcons(
   FcSimCardChip
 );
 
-// import bb, { area, areaSpline, areaLineRange, areaSplineRange } from "billboard.js";
-// import "billboard.js/dist/billboard.css";
-
 defineOptions({
   layout: AuthenticatedLayout,
 });

@@ -1,8 +1,9 @@
 <script setup>
-import { Head, Link, usePage } from "@inertiajs/vue3";
+import { Head, Link, usePage, useForm } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SectionHead from "@/Layouts/SectionHead.vue";
-// import initFlowBite from "@/Components/initFlowBite.vue";
+import PaystackPop from "@paystack/inline-js";
+import InputError from "@/Components/InputError.vue";
 
 //Importing FlowBite Components
 import { onMounted } from "vue";
@@ -21,6 +22,7 @@ import {
   GiPiggyBank,
   RiMastercardFill,
   FcSimCardChip,
+  PrSpinner,
 } from "oh-vue-icons/icons";
 import { addIcons } from "oh-vue-icons";
 
@@ -32,11 +34,9 @@ addIcons(
   IoCashOutline,
   GiPiggyBank,
   RiMastercardFill,
-  FcSimCardChip
+  FcSimCardChip,
+  PrSpinner
 );
-
-// import bb, { area, areaSpline, areaLineRange, areaSplineRange } from "billboard.js";
-// import "billboard.js/dist/billboard.css";
 
 defineOptions({
   layout: AuthenticatedLayout,
@@ -52,6 +52,109 @@ defineProps({
 });
 
 const user = usePage().props.auth.user;
+
+const depositForm = useForm({
+  walletType: "",
+  amount: "",
+  desc: "",
+  email: user.email,
+  transType: "deposit",
+});
+
+const depositSubmit = () => {
+  payWithPaystack;
+  // depositForm.post(route("finance.store"), {
+  // onFinish: console.log("finished deposit"),
+  // });
+};
+
+//PayStack Integration
+const calcPaymentFee = (amount) => {
+  let a = (amount * 1.5) / 100;
+  let b = (a * 1.5) / 100;
+  let c = Math.ceil(a + b);
+
+  if (c <= 1995) {
+    return amount + 100 + c * 100;
+  } else {
+    a = 2000;
+    b = (a * 1.5) / 100;
+    c = (b + a) * 100;
+    return amount * 100 + c;
+  }
+};
+
+function calculatePaymentFee(amount) {
+  var a = (amount * 1.5) / 100;
+  var b = (a * 1.5) / 100;
+  var c = Math.ceil(a + b);
+  // console.log('A = '+a);
+  // console.log('B = '+b);
+  // console.log('C = '+c);
+  if (c <= 1995) {
+    return amount * 100 + c * 100;
+  } else {
+    a = 2000;
+    b = (a * 1.5) / 100;
+    c = (b + a) * 100;
+    return amount * 100 + c;
+  }
+}
+
+function payWithPaystack(e) {
+  e.preventDefault();
+  var amount = calculatePaymentFee(document.getElementById("amount").value);
+  var real_amount = document.getElementById("amount").value * 100;
+  let handler = PaystackPop.setup({
+    key: "pk_test_017339973125c877c7ddb9fae77f14e6ad607269",
+    // key: "<?php echo $public_key_live; ?>",
+    email: document.getElementById("email").value,
+    amount: amount,
+    ref: "DEPOSIT_" + Math.floor(Math.random() * 1000000000 + 1),
+    metadata: {
+      custom_fields: [
+        {
+          type: document.getElementById("transType").value,
+          real_amt: real_amount,
+        },
+      ],
+    },
+    onClose: function () {
+      console.log("Transaction Cancelled.");
+    },
+    callback: function (response) {
+      verifyDeposit(response.reference);
+    },
+  });
+  handler.openIframe();
+}
+
+function verifyDeposit(token) {
+  $.ajax({
+    url: route("finance.deposit"),
+    // url: "authController/deposit_process.php",
+    type: "POST",
+    beforeSend: function () {},
+    data: {
+      action: "verify",
+      token: token,
+    },
+    dataType: "json",
+    success: function (data) {
+      if (data.approved) {
+        $("#depositForm").html(data.notice);
+      }
+      if (data.failed) {
+        $("#depositForm").html(data.notice);
+      }
+      if (data.error) {
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(textStatus, errorThrown);
+    },
+  });
+}
 </script>
 
 <template>
@@ -91,7 +194,7 @@ const user = usePage().props.auth.user;
         <!-- <i class="fas fa-wallet text-yellow-500"></i> -->
       </div>
       <div>
-        <p class="text-sm text-gray-500">My Balance</p>
+        <p class="text-sm text-gray-500">Savings Balance</p>
         <p class="text-sm font-bold">₦ {{ accountBalance }}</p>
       </div>
     </div>
@@ -103,8 +206,8 @@ const user = usePage().props.auth.user;
         <!-- <i class="fas fa-hand-holding-usd text-blue-500"></i> -->
       </div>
       <div>
-        <p class="text-sm text-gray-500">Income (ROI)</p>
-        <p class="text-sm font-bold text-green-400">+70%</p>
+        <p class="text-sm text-gray-500">Investments (ROI)</p>
+        <p class="text-sm font-bold text-green-400">+10%</p>
       </div>
     </div>
 
@@ -133,19 +236,19 @@ const user = usePage().props.auth.user;
     </div>
   </div>
 
-  <!-- Modal toggle -->
+  <!-- Deposit Modal toggle -->
   <button
-    data-modal-target="crud-modal"
-    data-modal-toggle="crud-modal"
-    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-5"
+    data-modal-target="deposit-modal"
+    data-modal-toggle="deposit-modal"
+    class="inline text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-5"
     type="button"
   >
-    Deposit
+    Deposit Funds
   </button>
 
-  <!-- Main modal -->
+  <!-- Deposit modal -->
   <div
-    id="crud-modal"
+    id="deposit-modal"
     tabindex="-1"
     aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -164,7 +267,7 @@ const user = usePage().props.auth.user;
           <button
             type="button"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-            data-modal-toggle="crud-modal"
+            data-modal-toggle="deposit-modal"
           >
             <svg
               class="w-3 h-3"
@@ -185,36 +288,194 @@ const user = usePage().props.auth.user;
           </button>
         </div>
         <!-- Modal body -->
-        <form class="p-4 md:p-5">
+        <form
+          class="p-4 md:p-5"
+          name="depositSubmit"
+          id="depositSubmit"
+          @submit.prevent="payWithPaystack"
+        >
+          <div id="depositForm"></div>
+          <ul class="text-xs text-gray-600 mb-5 list-disc list-inside">
+            <li>
+              Keep away some money for rainy days... Fund your AMEEMCA wallet today.
+            </li>
+            <li v-if="depositForm.walletType == 1" class="mt-2 text-red-500">
+              NOTE: This money goes to your AMEEMCA savings wallet not your Contribution
+              wallet.
+            </li>
+          </ul>
+
+          <input v-model="depositForm.email" type="hidden" name="email" id="email" />
+          <input
+            v-model="depositForm.transType"
+            type="hidden"
+            name="transType"
+            id="transType"
+          />
+
+          <div class="grid gap-4 mb-4 grid-cols-2">
+            <div class="col-span-2 sm:col-span-2">
+              <label
+                for="walletType"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Wallet
+              </label>
+              <select
+                id="walletType"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                v-model="depositForm.walletType"
+                required
+              >
+                <option value="" selected="">Select Wallet</option>
+                <option value="1">Savings Wallet</option>
+                <option value="2">Manual Contribution</option>
+                <option value="3">VTU wallet</option>
+              </select>
+              <InputError class="mt2" :message="depositForm.errors.walletType" />
+            </div>
+
+            <div class="col-span-2 sm:col-span-2">
+              <label
+                for="amount"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Amount</label
+              >
+              <input
+                v-model="depositForm.amount"
+                type="number"
+                name="amount"
+                min="1000"
+                id="amount"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="₦1,000.00"
+                required
+              />
+              <InputError class="mt2" :message="depositForm.errors.amount" />
+            </div>
+
+            <div class="col-span-2">
+              <label
+                for="description"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Description/Remark</label
+              >
+              <textarea
+                v-model="depositForm.desc"
+                id="description"
+                rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Write Descrption or remark here"
+              ></textarea>
+              <InputError class="mt2" :message="depositForm.errors.desc" />
+            </div>
+          </div>
+
+          <button
+            :disabled="depositForm.processing"
+            :class="{ 'opacity-25': depositForm.processing }"
+            type="submit"
+            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <v-icon
+              v-if="depositForm.processing"
+              name="pr-spinner"
+              class="animate-spin"
+            ></v-icon>
+
+            Proceed
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--Withdraw Modal toggle -->
+  <button
+    data-modal-target="withdraw-modal"
+    data-modal-toggle="withdraw-modal"
+    class="inline ml-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-5"
+    type="button"
+  >
+    Withdraw Funds
+  </button>
+
+  <!-- Withdraw modal -->
+  <div
+    id="withdraw-modal"
+    tabindex="-1"
+    aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div
+          class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+        >
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Funds Withdrawal
+          </h3>
+
+          <button
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="withdraw-modal"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form class="p-4 md:p-5" name="paymentForm" id="paymentForm">
+          <ul class="text-xs text-gray-600 mb-5 list-disc list-inside">
+            <li>Withdraw funds from your AMEEMCA savings wallet to your local bank.</li>
+            <li>NOTE: This might take up to 24hrs processing period.</li>
+          </ul>
+
           <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2 sm:col-span-2">
               <label
                 for="category"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Category</label
               >
+                Bank
+              </label>
               <select
                 id="category"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               >
-                <option selected="">Select category</option>
-                <option value="1">Savings Wallet</option>
-                <option value="2">Manual Contribution</option>
+                <option selected="">Select Bank</option>
               </select>
             </div>
 
             <div class="col-span-2 sm:col-span-2">
               <label
-                for="price"
+                for="amount"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Price</label
+                >Amount</label
               >
               <input
                 type="number"
-                name="price"
-                id="price"
+                name="amount"
+                id="amount"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="$2999"
+                placeholder="₦1,000,000.00"
                 required=""
               />
             </div>
@@ -223,16 +484,19 @@ const user = usePage().props.auth.user;
               <label
                 for="description"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Description</label
               >
+                Description/Remark
+              </label>
+
               <textarea
                 id="description"
                 rows="4"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Write product description here"
+                placeholder="Write Descrption or remark here"
               ></textarea>
             </div>
           </div>
+
           <button
             type="submit"
             class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -249,15 +513,10 @@ const user = usePage().props.auth.user;
                 clip-rule="evenodd"
               ></path>
             </svg>
-            Deposit
+            Proceed
           </button>
         </form>
       </div>
     </div>
-  </div>
-
-  <!-- Markup -->
-  <div class="p-5 bg-white rounded-md chart_area">
-    <div id="chart" class="chart"></div>
   </div>
 </template>

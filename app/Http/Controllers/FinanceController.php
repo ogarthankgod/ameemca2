@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account_balance;
 use App\Models\Contributions;
 use App\Models\Loan_balance;
+use App\Models\settings;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -33,6 +34,8 @@ class FinanceController extends Controller
         $contributionBalance = Contributions::where("staffid", $staffid)->sum('amount');
         $loanBalance = Loan_balance::where("staffid", $staffid)->sum('balance');
 
+        $testKey = settings::find(1)->paystack_test_publickey;
+
         return Inertia::render("Finance/Index", [
             "greeting" => $greeting,
             "time" => $time,
@@ -40,6 +43,7 @@ class FinanceController extends Controller
             "accountBalance" => number_format($accountBalance, 2),
             "loanBalance" => number_format($loanBalance, 2),
             "contributionBalance" => number_format($contributionBalance, 2),
+            // "paystack_test_publickey" => $testKey,
         ]);
     }
 
@@ -56,7 +60,10 @@ class FinanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //hmm.. different kinds of deposits
+        //into different kinds of wallets
+        sleep(10);
+        return "deposit success";
     }
 
     /**
