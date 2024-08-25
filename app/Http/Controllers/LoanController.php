@@ -71,7 +71,7 @@ class LoanController extends Controller
     }
     
     public function history(Request $reequest) {
-        return Inertia::render("Loan/Index", [
+        return Inertia::render("Loan/LoanHistory", [
             "pageState" => "Loan History"
         ]);
     }

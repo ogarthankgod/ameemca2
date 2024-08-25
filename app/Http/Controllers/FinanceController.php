@@ -68,7 +68,7 @@ class FinanceController extends Controller
     //into different kinds of wallets
     $request->validate([
       'email' => ['required', 'email'],
-      'amount' => ['required', 'min_digits:999'],
+      'amount' => ['required'],
       'transType' => ['required'],
     ]);
 
