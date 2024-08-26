@@ -1,0 +1,1 @@
+import{o as e,c as a,a as o,u as t,F as r,b as s,Z as c}from"./app-CSFOjpJl.js";const l=s("h1",null,"Hello World",-1),d={__name:"Dashboard",setup(n){return(_,u)=>(e(),a(r,null,[o(t(c),{title:"Welcome"}),l],64))}};export{d as default};

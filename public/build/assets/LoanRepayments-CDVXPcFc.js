@@ -1,0 +1,1 @@
+import{o as e,c as a,a as t,u as o,F as s,b as n,Z as r}from"./app-CSFOjpJl.js";const c=n("h1",null,"Hello World",-1),p={__name:"LoanRepayments",setup(l){return(_,m)=>(e(),a(s,null,[t(o(r),{title:"Welcome"}),c],64))}};export{p as default};

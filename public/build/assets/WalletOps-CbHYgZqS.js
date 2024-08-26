@@ -1,0 +1,1 @@
+import{o as e,c as a,a as t,u as o,F as l,b as s,Z as r}from"./app-CSFOjpJl.js";const c=s("h1",null,"Hello World",-1),p={__name:"WalletOps",setup(n){return(_,u)=>(e(),a(l,null,[t(o(r),{title:"Welcome"}),c],64))}};export{p as default};
