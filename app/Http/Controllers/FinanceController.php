@@ -188,7 +188,7 @@ class FinanceController extends Controller
       }
     }
 
-    return "Verifying Transactions";
+    return "Verifying Transactions.";
   }
 
   public function verifyWebHook(Request $request)
