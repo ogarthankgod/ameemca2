@@ -49,7 +49,7 @@ const user = usePage().props.auth.user;
     <table class="min-w-full divide-y-2 bg-white text-sm">
       <thead class="ltr:text-left rtl:text-right divide-y divide-gray-200">
         <tr>
-          <div class="bg-white p-5">...</div>
+          <div class="bg-white p-5"></div>
         </tr>
 
         <tr>

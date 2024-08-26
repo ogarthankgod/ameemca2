@@ -17,42 +17,6 @@ CREATE TABLE `account_balance` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `admin`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `admin` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `lastname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `admin_loan_approval`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `admin_loan_approval` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `loan_id` varchar(255) NOT NULL,
-  `admin_id` varchar(255) NOT NULL,
-  `admin_response` varchar(255) NOT NULL,
-  `time` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `loan_id` (`loan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `allotment_records`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `allotment_records` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `allotment_file` varchar(255) NOT NULL,
-  `file_uploader` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `amc_featured_forums`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -295,16 +259,6 @@ CREATE TABLE `amc_reply_report_attachments` (
   CONSTRAINT `amc_reply_report_attachments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `banks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `banks` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `bankname` varchar(255) NOT NULL,
-  `bankcode` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -374,120 +328,6 @@ CREATE TABLE `chats` (
   CONSTRAINT `chats_chat_to_foreign` FOREIGN KEY (`chat_to`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `contributions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `contributions` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` varchar(255) NOT NULL,
-  `amount` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `staffid` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `conversion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `conversion` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` int NOT NULL,
-  `amount` varchar(255) NOT NULL,
-  `status` enum('approved','notapproved') NOT NULL,
-  `time` varchar(255) NOT NULL,
-  `expiry` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `staffid` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `conversion_records`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `conversion_records` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` int NOT NULL,
-  `amount` varchar(255) NOT NULL,
-  `currency` varchar(255) NOT NULL,
-  `refcode` varchar(255) NOT NULL,
-  `transaction_status` varchar(255) NOT NULL,
-  `medium` varchar(255) NOT NULL,
-  `ip_address` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `time` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  `expiry` varchar(20) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `staffid` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `deposit_records`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `deposit_records` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` int NOT NULL,
-  `amount` varchar(255) NOT NULL,
-  `currency` varchar(255) NOT NULL,
-  `refcode` varchar(255) NOT NULL,
-  `transaction_status` varchar(255) NOT NULL,
-  `medium` varchar(255) NOT NULL,
-  `ip_address` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `time` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  `expiry` varchar(20) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `staffid` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `document_types`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `document_types` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `doc_type` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `documents`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `documents` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` int NOT NULL,
-  `doc_type` int NOT NULL,
-  `doc_name` text NOT NULL,
-  `doc_file` text NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `documents_FK` (`doc_type`),
-  KEY `documents_FK_1` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `expenditure`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `expenditure` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `amount` varchar(255) NOT NULL DEFAULT '0',
-  `reason` longtext NOT NULL,
-  `recipient_name` varchar(255) NOT NULL,
-  `recipient_account` varchar(255) NOT NULL,
-  `recipient_bank` varchar(255) NOT NULL,
-  `admin_id` varchar(255) NOT NULL,
-  `transaction_id` varchar(255) NOT NULL,
-  `recipient` varchar(255) NOT NULL,
-  `transfer_code` varchar(255) NOT NULL,
-  `reference` varchar(255) NOT NULL,
-  `currency` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `ip` varchar(255) NOT NULL,
-  `time` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `failed_jobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -524,15 +364,17 @@ DROP TABLE IF EXISTS `investments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `investments` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `batch` varchar(255) NOT NULL,
-  `amount` decimal(13,2) NOT NULL,
-  `staffid` int NOT NULL,
-  `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `investment` decimal(13,2) NOT NULL,
+  `roi` decimal(13,2) NOT NULL,
+  `batch` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `investments_FK` (`staffid`),
-  CONSTRAINT `investments_ibfk_1` FOREIGN KEY (`staffid`) REFERENCES `users` (`staffid`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `investments_user_id_foreign` (`user_id`),
+  CONSTRAINT `investments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `job_batches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -566,72 +408,6 @@ CREATE TABLE `jobs` (
   KEY `jobs_queue_index` (`queue`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `loan_balance`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `loan_balance` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` varchar(255) NOT NULL,
-  `balance` varchar(255) NOT NULL,
-  `last_loan_id` int NOT NULL,
-  `time` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `loan_guarantors`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `loan_guarantors` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `loan_id` varchar(255) NOT NULL,
-  `guarantor_staffid` varchar(255) NOT NULL,
-  `guarantor_response` varchar(255) NOT NULL,
-  `time` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `loan_id` (`loan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `loan_repayment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `loan_repayment` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `loan_id` int NOT NULL,
-  `staffid` int NOT NULL,
-  `amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `transaction_ref` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `transaction_status` enum('success','failed') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'success',
-  `time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `loan_id` (`loan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `loan_request`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `loan_request` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` int NOT NULL,
-  `package_id` int NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `amount` varchar(255) NOT NULL,
-  `monthlydue` varchar(255) NOT NULL,
-  `biweeklydue` varchar(255) NOT NULL,
-  `interest` varchar(255) NOT NULL,
-  `loan_duration` varchar(255) NOT NULL,
-  `refcode` varchar(255) NOT NULL,
-  `guarantor_one` varchar(255) NOT NULL,
-  `guarantor_two` varchar(255) NOT NULL,
-  `reason` longtext NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `repayment_status` enum('paid','unpaid') NOT NULL DEFAULT 'unpaid',
-  `time` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -641,30 +417,6 @@ CREATE TABLE `migrations` (
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `package`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `package` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `package_name` varchar(255) NOT NULL,
-  `package_price` varchar(255) NOT NULL,
-  `package_interest_rate` varchar(255) NOT NULL,
-  `package_tenure` varchar(255) NOT NULL,
-  `package_access_rate` varchar(255) NOT NULL,
-  `base_fee` varchar(255) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `package_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `package_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `package_id` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -709,22 +461,6 @@ CREATE TABLE `sessions` (
   KEY `sessions_user_id_index` (`user_id`),
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `settings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `settings` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `paystack_live_publickey` varchar(255) NOT NULL,
-  `paystack_test_publickey` varchar(255) NOT NULL,
-  `paystack_test_secretkey` varchar(255) NOT NULL,
-  `paystack_live_secretkey` varchar(255) NOT NULL,
-  `system_name` varchar(255) NOT NULL,
-  `system_desc` varchar(255) NOT NULL,
-  `smtp_email` varchar(255) NOT NULL,
-  `smtp_pass` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `support_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -776,25 +512,6 @@ CREATE TABLE `support_tickets` (
   CONSTRAINT `support_tickets_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `transaction`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `transaction` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` int NOT NULL,
-  `amount` varchar(255) NOT NULL,
-  `currency` varchar(255) NOT NULL,
-  `refcode` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `medium` varchar(255) NOT NULL,
-  `ip_address` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `time` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `staffid` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `user_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -808,18 +525,6 @@ CREATE TABLE `user_types` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `userbank`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `userbank` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` varchar(255) NOT NULL,
-  `bank_id` varchar(255) NOT NULL,
-  `account_no` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `staffid` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -873,54 +578,6 @@ CREATE TABLE `users` (
   CONSTRAINT `users_user_type_foreign` FOREIGN KEY (`user_type`) REFERENCES `user_types` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `vtu_wallets`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vtu_wallets` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `staffid` int NOT NULL,
-  `balance` decimal(13,2) NOT NULL DEFAULT '0.00',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `withdrawal`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `withdrawal` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` varchar(255) NOT NULL,
-  `amount` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `refcode` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `time` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `staffid` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `withdrawal_records`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `withdrawal_records` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staffid` int NOT NULL,
-  `amount` varchar(255) NOT NULL,
-  `currency` varchar(255) NOT NULL,
-  `refcode` varchar(255) NOT NULL,
-  `transaction_status` varchar(255) NOT NULL,
-  `medium` varchar(255) NOT NULL,
-  `ip_address` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `time` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  `expiry` varchar(20) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `staffid` (`staffid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -937,4 +594,3 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2024_05_23_1135
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (7,'2024_05_23_230023_create_forums_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (8,'2024_05_29_095921_investments',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (9,'2024_05_29_104249_create_account_balance',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (10,'2024_08_25_070659_create_vtu_wallets_table',2);
