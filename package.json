@@ -30,6 +30,7 @@
         "flowbite-vue": "^0.1.5",
         "oh-vue-icons": "^1.0.0-rc3",
         "pinia": "^2.1.7",
+        "simple-datatables": "^9.1.0",
         "vue-chartjs": "^5.3.1",
         "vue-router": "^4.3.2",
         "vuestic-ui": "^1.9.10"
