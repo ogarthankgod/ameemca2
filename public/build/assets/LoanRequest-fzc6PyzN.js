@@ -1,0 +1,1 @@
+import{o as e,c as a,a as t,u as o,F as s,b as r,Z as c}from"./app-Z8UXhmON.js";const l=r("h1",null,"Hello World",-1),p={__name:"LoanRequest",setup(n){return(_,u)=>(e(),a(s,null,[t(o(c),{title:"Welcome"}),l],64))}};export{p as default};

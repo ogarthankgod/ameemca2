@@ -1,0 +1,1 @@
+import{o,c as t,a as e,u as a,F as r,b as s,Z as n}from"./app-Z8UXhmON.js";import{L as c}from"./Logo-BZHAwBNg.js";import"./_plugin-vue_export-helper-DlAUqK2U.js";const l=s("h1",null,"Hello World",-1),f={__name:"Guest",props:{canLogin:{type:Boolean},canRegister:{type:Boolean}},setup(p){return(m,_)=>(o(),t(r,null,[e(a(n),{title:"Welcome"}),e(c),l],64))}};export{f as default};

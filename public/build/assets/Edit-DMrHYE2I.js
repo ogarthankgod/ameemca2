@@ -1,0 +1,1 @@
+import{o as e,c as t,a,u as o,F as r,b as s,Z as c}from"./app-Z8UXhmON.js";const l=s("h1",null,"Hello World",-1),d={__name:"Edit",setup(n){return(_,u)=>(e(),t(r,null,[a(o(c),{title:"Welcome"}),l],64))}};export{d as default};
