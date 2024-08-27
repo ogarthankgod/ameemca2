@@ -2,6 +2,13 @@
 import { Head, Link, usePage, useForm } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SectionHead from "@/Layouts/SectionHead.vue";
+//Importing FlowBite Components
+import { onMounted } from "vue";
+import { initFlowbite } from "flowbite";
+// initialize components based on data attribute selectors
+onMounted(() => {
+  initFlowbite();
+});
 
 import {
   GiReceiveMoney,
@@ -40,12 +47,12 @@ const user = usePage().props.auth.user;
 const page = usePage().props;
 
 const loanRequestForm = useForm({
-  loantType: "1",
-  amount: "",
-  realAmount: 0,
-  desc: "EMMANUEL",
-  email: user.email,
-  transType: "deposit",
+  loantType: "",
+  loantDuration: "",
+  loanGuarantor1: "",
+  loanGuarantor2: "",
+  loanAmount: "",
+  loanReason: "",
 });
 
 const loanRequestSubmit = async () => {
@@ -82,86 +89,101 @@ const loanRequestSubmit = async () => {
           >Select Loan Type</label
         >
         <select
+          v-model="loanRequestForm.loantType"
           id="loanType"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
-          <option selected>Select Loan Type</option>
-          <option value="EL">Project Loan</option>
-          <option value="PL">Emergency Loan</option>
+          <option selected value="">Select Loan Type</option>
+          <option value="1">Project Loan</option>
+          <option value="2">Emergency Loan</option>
         </select>
+        <InputError class="mt-1" :message="loanRequestForm.errors.loantType" />
       </div>
 
       <div class="mb-5">
         <label
-          for="loanType"
+          for="loanDuration"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Loan Tenure</label
         >
+          Loan Tenure
+        </label>
         <select
-          id="loanType"
+          v-model="loanRequestForm.loantDuration"
+          id="loanDuration"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          value=""
         >
           <option selected>Loan Duration</option>
         </select>
+        <InputError class="mt2" :message="loanRequestForm.errors.loantDuration" />
       </div>
 
       <div class="grid grid-cols-2 gap-3">
         <div>
           <label
-            for="loanType"
+            for="loanGuarantor1"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Choose Guarantor (1)</label
           >
           <select
-            id="loanType"
+            v-model="loanRequestForm.loanGuarantor1"
+            id="loanGuarantor1"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option selected>Select Staff</option>
+            <option selected value="">Select Staff</option>
           </select>
+          <InputError class="mt2" :message="loanRequestForm.errors.loanGuarantor1" />
         </div>
 
-        <div>
+        <div class="mb-5">
           <label
-            for="loanType"
+            for="loanGuarantor2"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Choose Guarantor (2)</label
           >
           <select
-            id="loanType"
+            v-model="loanRequestForm.loanGuarantor2"
+            id="loanGuarantor2"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            value=""
           >
-            <option selected>Select Staff</option>
+            <option selected value="">Select Staff</option>
           </select>
+          <InputError class="mt2" :message="loanRequestForm.errors.loanGuarantor2" />
         </div>
       </div>
 
       <div class="mb-5">
         <label
-          for="amount"
+          for="loanAmount"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >Loan Amount</label
         >
         <input
+          v-model="loanRequestForm.loanAmount"
           type="loanAmount"
           id="loanAmount"
           placeholder="0.00"
           class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
           required
         />
+        <InputError class="mt2" :message="loanRequestForm.errors.loanAmountA" />
       </div>
 
       <div class="mb-5">
         <label
-          for="password"
+          for="loanReason"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >Why do you need this loan?</label
         >
         <textarea
+          v-model="loanRequestForm.loanReason"
           type="text"
           id="loanReason"
           class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
           required
         ></textarea>
+        <InputError class="mt2" :message="loanRequestForm.errors.loanReason" />
       </div>
 
       <div class="flex items-start mb-5">
@@ -202,7 +224,7 @@ const loanRequestSubmit = async () => {
     </form>
   </div>
 
-  <div class="grid grid-cols-1 mb-7 opacity-50">
+  <div class="grid grid-cols-1 mb-7 opacity-50 hidden">
     <div
       class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
       role="alert"
