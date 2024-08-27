@@ -1,1 +1,0 @@
-import{o as e,c as a,a as t,u as o,F as l,b as n,Z as r}from"./app-Z8UXhmON.js";const s=n("h1",null,"Hello World",-1),d={__name:"DiamondPlatinum",setup(c){return(_,m)=>(e(),a(l,null,[t(o(r),{title:"Welcome"}),s],64))}};export{d as default};
