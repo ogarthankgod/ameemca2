@@ -9,6 +9,8 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import { createVuestic } from "vuestic-ui";
+import 'flowbite';
+
 // import { createPinia } from 'pinia';
 
 //Importing FlowBite Components
@@ -30,7 +32,7 @@ const appName = import.meta.env.VITE_APP_NAME || "Ameemca Portal";
 
 // // initialize components based on data attribute selectors
 // onMounted(() => {
-//     initFlowbite();
+    // initFlowbite();
 // });
 
 createInertiaApp({

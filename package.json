@@ -26,7 +26,7 @@
         "billboard.js": "^3.12.4",
         "chart.js": "^4.4.3",
         "dayjs": "^1.11.11",
-        "flowbite": "^2.3.0",
+        "flowbite": "^2.5.1",
         "flowbite-vue": "^0.1.5",
         "oh-vue-icons": "^1.0.0-rc3",
         "pinia": "^2.1.7",

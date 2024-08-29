@@ -2,17 +2,34 @@
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SectionHead from "@/Layouts/SectionHead.vue";
-import { DataTable } from "simple-datatables";
+import {
+  DataTable,
+  exportCSV,
+  exportJSON,
+  exportSQL,
+  exportTXT,
+} from "simple-datatables";
 
 //Importing FlowBite Components
 import { onMounted } from "vue";
 import { initFlowbite, Dropdown } from "flowbite";
+
+import {
+  GiReceiveMoney,
+  GiTakeMyMoney,
+  GiMoneyStack,
+  GiSwapBag,
+  IoCashOutline,
+  GiPiggyBank,
+  RiMastercardFill,
+  FcSimCardChip,
+} from "oh-vue-icons/icons";
+import { addIcons } from "oh-vue-icons";
+
 // initialize components based on data attribute selectors
 onMounted(() => {
   initFlowbite();
 
-  const dataTable = new DataTable("#export-table");
-  console.log(dataTable.simpleDatatables);
   if (document.getElementById("export-table") && typeof DataTable !== "undefined") {
     const exportCustomCSV = function (dataTable, userOptions = {}) {
       // A modified CSV export that includes a row of minuses at the start and end.
@@ -60,7 +77,6 @@ onMounted(() => {
 
       return str;
     };
-
     const table = new DataTable("#export-table", {
       template: (options, dom) =>
         "<div class='" +
@@ -156,7 +172,6 @@ onMounted(() => {
     });
     const $exportButton = document.getElementById("exportDropdownButton");
     const $exportDropdownEl = document.getElementById("exportDropdown");
-
     const dropdown = new Dropdown($exportDropdownEl, $exportButton);
     console.log(dropdown);
 
@@ -187,18 +202,6 @@ onMounted(() => {
   }
 });
 
-import {
-  GiReceiveMoney,
-  GiTakeMyMoney,
-  GiMoneyStack,
-  GiSwapBag,
-  IoCashOutline,
-  GiPiggyBank,
-  RiMastercardFill,
-  FcSimCardChip,
-} from "oh-vue-icons/icons";
-import { addIcons } from "oh-vue-icons";
-
 addIcons(
   GiReceiveMoney,
   GiTakeMyMoney,
@@ -216,6 +219,7 @@ defineOptions({
 
 defineProps({
   pageState: String,
+  loanHistory: Object,
 });
 
 const user = usePage().props.auth.user;
@@ -233,7 +237,7 @@ const user = usePage().props.auth.user;
     <table id="export-table">
       <thead>
         <tr>
-          <th>
+          <th data-type="number">
             <span class="flex items-center">
               SN
               <svg
@@ -255,7 +259,7 @@ const user = usePage().props.auth.user;
               </svg>
             </span>
           </th>
-          <th>
+          <th data-type="string">
             <span class="flex items-center">
               Amount
               <svg
@@ -277,9 +281,9 @@ const user = usePage().props.auth.user;
               </svg>
             </span>
           </th>
-          <th data-type="date" data-format="YYYY/DD/MM">
+          <th data-type="string">
             <span class="flex items-center">
-              Loan Type
+              Type
               <svg
                 class="w-4 h-4 ms-1"
                 aria-hidden="true"
@@ -299,7 +303,7 @@ const user = usePage().props.auth.user;
               </svg>
             </span>
           </th>
-          <th>
+          <th data-type="string">
             <span class="flex items-center">
               Status
               <svg
@@ -321,7 +325,7 @@ const user = usePage().props.auth.user;
               </svg>
             </span>
           </th>
-          <th>
+          <!-- <th data-type="string">
             <span class="flex items-center">
               Progress
               <svg
@@ -342,8 +346,8 @@ const user = usePage().props.auth.user;
                 />
               </svg>
             </span>
-          </th>
-          <th>
+          </th> -->
+          <!-- <th data-type="string">
             <span class="flex items-center">
               Ref.
               <svg
@@ -364,8 +368,8 @@ const user = usePage().props.auth.user;
                 />
               </svg>
             </span>
-          </th>
-          <th>
+          </th> -->
+          <th data-type="date" data-format="YYYY/DD/MM">
             <span class="flex items-center">
               Date
               <svg
@@ -390,12 +394,20 @@ const user = usePage().props.auth.user;
         </tr>
       </thead>
       <tbody>
-        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
-          <td>1</td>
+        <tr
+          v-for="loanData in loanHistory"
+          :key="loanData.span"
+          class="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+        >
           <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            $1000.00
+            {{ loanData.amount }}
           </td>
-          <td>Project Loan</td>
+          <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ loanData.amount }}
+          </td>
+          <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ loanData.status == 1 ? "Project Loan" : "Emergency Loan" }}
+          </td>
           <td>
             <span
               class="inline-flex items-center justify-center rounded-full border border-red-500 px-2.5 py-0.5 text-red-400"
@@ -415,10 +427,12 @@ const user = usePage().props.auth.user;
                 />
               </svg>
 
-              <p class="whitespace-nowrap text-sm">Pending</p>
+              <p class="whitespace-nowrap text-sm">
+                {{ loanData.status }}
+              </p>
             </span>
           </td>
-          <td>
+          <!-- <td>
             <Link
               href="#"
               class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
@@ -426,8 +440,8 @@ const user = usePage().props.auth.user;
               View
             </Link>
           </td>
-          <td>edyc563</td>
-          <td>2024-25-08</td>
+          <td>ref_Eirvvg</td> -->
+          <td>{{ loanData.date }}</td>
         </tr>
       </tbody>
     </table>
@@ -490,88 +504,9 @@ const user = usePage().props.auth.user;
         </tr>
       </tbody>
     </table> -->
-
-    <div class="rounded-b-lg border-t border-gray-200 px-4 py-2">
-      <ol class="flex justify-end gap-1 text-xs font-medium">
-        <li>
-          <a
-            href="#"
-            class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
-          >
-            <span class="sr-only">Prev Page</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="size-3"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#"
-            class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
-          >
-            1
-          </a>
-        </li>
-
-        <li
-          class="block size-8 rounded border-blue-600 bg-blue-600 text-center leading-8 text-white"
-        >
-          2
-        </li>
-
-        <li>
-          <a
-            href="#"
-            class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
-          >
-            3
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#"
-            class="block size-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900"
-          >
-            4
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#"
-            class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
-          >
-            <span class="sr-only">Next Page</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="size-3"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </a>
-        </li>
-      </ol>
-    </div>
   </div>
 
-  <div class="grid grid-cols-1 mb-7 opacity-50">
+  <div class="grid grid-cols-1 mb-7 opacity-50 hidden">
     <div
       class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
       role="alert"

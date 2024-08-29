@@ -2,9 +2,12 @@
 import { Head, Link, usePage, useForm } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SectionHead from "@/Layouts/SectionHead.vue";
+import InputError from "@/Components/InputError.vue";
+
 //Importing FlowBite Components
-import { onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { initFlowbite } from "flowbite";
+
 // initialize components based on data attribute selectors
 onMounted(() => {
   initFlowbite();
@@ -41,19 +44,42 @@ defineOptions({
 
 defineProps({
   pageState: String,
+  packageInfo: Object,
 });
 
 const user = usePage().props.auth.user;
 const page = usePage().props;
 
 const loanRequestForm = useForm({
-  loantType: "",
+  loanType: "",
   loantDuration: "",
   loanGuarantor1: "",
   loanGuarantor2: "",
   loanAmount: "",
   loanReason: "",
 });
+
+const loanTenure = ref(0);
+
+const loanTypeChange = (packageTenure) => {
+  if (loanRequestForm.loanType == 0) return;
+
+  console.log("Type Changed to: " + loanRequestForm.loanType);
+
+  if (loanRequestForm.loanType == 1) {
+    console.log("Project Loan");
+    loanTenure.value = packageTenure ?? 26;
+    console.log(loanTenure.value);
+  }
+
+  if (loanRequestForm.loanType == 2) {
+    console.log("Emmergency Loan");
+    loanTenure.value = 26;
+    console.log(loanTenure.value);
+  }
+
+  if (loanTenure.value > 0) console.log("Tenure Above 0");
+};
 
 const loanRequestSubmit = async () => {
   loanRequestForm.realAmount = amount * 100;
@@ -89,15 +115,16 @@ const loanRequestSubmit = async () => {
           >Select Loan Type</label
         >
         <select
-          v-model="loanRequestForm.loantType"
+          v-model="loanRequestForm.loanType"
           id="loanType"
+          :onchange="loanTypeChange(packageInfo.packageTenure)"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option selected value="">Select Loan Type</option>
           <option value="1">Project Loan</option>
           <option value="2">Emergency Loan</option>
         </select>
-        <InputError class="mt-1" :message="loanRequestForm.errors.loantType" />
+        <InputError class="mt-1" :message="loanRequestForm.errors.loanType" />
       </div>
 
       <div class="mb-5">
@@ -113,7 +140,15 @@ const loanRequestSubmit = async () => {
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           value=""
         >
-          <option selected>Loan Duration</option>
+          <option selected value="">Loan Duration</option>
+          <!-- <option
+            :v-if="loanTenure.value > 0"
+            :v-for="i in loanTenure.value"
+            :key="i"
+            :value="i"
+          >
+            {{ i }}
+          </option> -->
         </select>
         <InputError class="mt2" :message="loanRequestForm.errors.loantDuration" />
       </div>
@@ -201,8 +236,8 @@ const loanRequestSubmit = async () => {
           for="terms"
           class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >I agree with the
-          <span href="#" class="text-blue-600 hover:underline dark:text-blue-500">
-            terms and conditions
+          <span class="text-emerald-600 hover:underline dark:text-emerald-500">
+            above loan calculation
           </span>
         </label>
       </div>

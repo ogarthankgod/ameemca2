@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Loan_request;
+use App\Models\Package;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -64,31 +66,48 @@ class LoanController extends Controller
         //
     }
 
-    public function request(Request $reequest) {
+    public function request(Request $request) {
+        $packageInfo = Package::find($request->user()->package);
+        $packageInfo = [
+            "packageName" => $packageInfo->package_name,
+            "packageTenure" => $packageInfo->package_tenure,
+        ];
+
         return Inertia::render("Loan/LoanRequest", [
-            "pageState" => "Loan Request"
+            "pageState" => "Loan Request",
+            "packageInfo" => $packageInfo
         ]);
     }
     
-    public function history(Request $reequest) {
+    public function history(Request $request) {
+        $loanData = Loan_request::where("staffid", $request->user()->staffid)->get()->map(fn($data, $count) => [
+          "sn" => $count+1,
+          "amount" => number_format($data->amount, 2),
+          "type" => $data->type,
+          "status" => $data->status,
+          "refcode" => $data->refcode,
+          "date" => $data->date,
+        ]);
+;
         return Inertia::render("Loan/LoanHistory", [
-            "pageState" => "Loan History"
+            "pageState" => "Loan History",
+            "loanHistory" => $loanData
         ]);
     }
 
-    public function repayments(Request $reequest) {
+    public function repayments(Request $request) {
         return Inertia::render("Loan/Index", [
             "pageState" => "Loan Payments"
         ]);
     }
 
-    public function bulkLoanRepayments(Request $reequest) {
+    public function bulkLoanRepayments(Request $request) {
         return Inertia::render("Loan/Index", [
             "pageState" => "Bulk Loan Repayments"
         ]);
     }
 
-    public function fetch(Request $reequest) {
+    public function fetch(Request $request) {
         //Fetch loan Info
         return Inertia::render("Loan/Index", [
             "pageState" => "fetch"

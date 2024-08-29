@@ -4,11 +4,11 @@ import forms from "@tailwindcss/forms";
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
+        "./node_modules/flowbite/**/*.js",
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.vue",
-        "./node_modules/flowbite/**/*.js",
     ],
 
     theme: {
@@ -16,7 +16,7 @@ export default {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
-            colors: {
+            colors: { 
                 primary: {
                     50: "#eff6ff",
                     100: "#dbeafe",
@@ -34,7 +34,10 @@ export default {
         },
     },
 
-    plugins: [forms, require("flowbite/plugin")({
-      datatables: true,
-  })],
+    plugins: [
+        require("flowbite/plugin")({
+            datatables: true,
+        }),
+        forms,
+    ],
 };
