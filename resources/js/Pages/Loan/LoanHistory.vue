@@ -26,11 +26,33 @@ import {
 } from "oh-vue-icons/icons";
 import { addIcons } from "oh-vue-icons";
 
+addIcons(
+  GiReceiveMoney,
+  GiTakeMyMoney,
+  GiMoneyStack,
+  GiSwapBag,
+  IoCashOutline,
+  GiPiggyBank,
+  RiMastercardFill,
+  FcSimCardChip
+);
+
+defineOptions({
+  layout: AuthenticatedLayout,
+});
+
+defineProps({
+  pageState: String,
+  loanHistory: Object,
+});
+
+const user = usePage().props.auth.user;
+
 // initialize components based on data attribute selectors
 onMounted(() => {
   initFlowbite();
 
-  if (document.getElementById("export-table") && typeof DataTable !== "undefined") {
+  if (document.getElementById("finance-table") && typeof DataTable !== "undefined") {
     const exportCustomCSV = function (dataTable, userOptions = {}) {
       // A modified CSV export that includes a row of minuses at the start and end.
       const clonedUserOptions = {
@@ -66,7 +88,7 @@ onMounted(() => {
         // Create a link to trigger the download
         const link = document.createElement("a");
         link.href = encodeURI("data:text/csv;charset=utf-8," + str);
-        link.download = (options.filename || "datatable_export") + ".txt";
+        link.download = (options.filename || user.staffid + "_datatable_export") + ".txt";
         // Append the link
         document.body.appendChild(link);
         // Trigger the download
@@ -77,7 +99,8 @@ onMounted(() => {
 
       return str;
     };
-    const table = new DataTable("#export-table", {
+
+    const table = new DataTable("#finance-table", {
       template: (options, dom) =>
         "<div class='" +
         options.classes.top +
@@ -173,7 +196,7 @@ onMounted(() => {
     const $exportButton = document.getElementById("exportDropdownButton");
     const $exportDropdownEl = document.getElementById("exportDropdown");
     const dropdown = new Dropdown($exportDropdownEl, $exportButton);
-    console.log(dropdown);
+    // console.log(dropdown);
 
     document.getElementById("export-csv").addEventListener("click", () => {
       exportCSV(table, {
@@ -201,28 +224,6 @@ onMounted(() => {
     });
   }
 });
-
-addIcons(
-  GiReceiveMoney,
-  GiTakeMyMoney,
-  GiMoneyStack,
-  GiSwapBag,
-  IoCashOutline,
-  GiPiggyBank,
-  RiMastercardFill,
-  FcSimCardChip
-);
-
-defineOptions({
-  layout: AuthenticatedLayout,
-});
-
-defineProps({
-  pageState: String,
-  loanHistory: Object,
-});
-
-const user = usePage().props.auth.user;
 </script>
 
 <template>
@@ -234,10 +235,10 @@ const user = usePage().props.auth.user;
   <SectionHead :text="pageState" />
 
   <div class="bg-white rounded-md p-1 mb-5">
-    <table id="export-table">
+    <table id="finance-table">
       <thead>
         <tr>
-          <th data-type="number">
+          <th>
             <span class="flex items-center">
               SN
               <svg
@@ -259,7 +260,7 @@ const user = usePage().props.auth.user;
               </svg>
             </span>
           </th>
-          <th data-type="string">
+          <th>
             <span class="flex items-center">
               Amount
               <svg
@@ -281,7 +282,7 @@ const user = usePage().props.auth.user;
               </svg>
             </span>
           </th>
-          <th data-type="string">
+          <th>
             <span class="flex items-center">
               Type
               <svg
@@ -303,7 +304,7 @@ const user = usePage().props.auth.user;
               </svg>
             </span>
           </th>
-          <th data-type="string">
+          <th>
             <span class="flex items-center">
               Status
               <svg
@@ -325,7 +326,7 @@ const user = usePage().props.auth.user;
               </svg>
             </span>
           </th>
-          <!-- <th data-type="string">
+          <th class="hidden">
             <span class="flex items-center">
               Progress
               <svg
@@ -346,8 +347,8 @@ const user = usePage().props.auth.user;
                 />
               </svg>
             </span>
-          </th> -->
-          <!-- <th data-type="string">
+          </th>
+          <th class="hidden">
             <span class="flex items-center">
               Ref.
               <svg
@@ -368,7 +369,7 @@ const user = usePage().props.auth.user;
                 />
               </svg>
             </span>
-          </th> -->
+          </th>
           <th data-type="date" data-format="YYYY/DD/MM">
             <span class="flex items-center">
               Date
@@ -400,7 +401,7 @@ const user = usePage().props.auth.user;
           class="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
         >
           <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{ loanData.amount }}
+            {{ loanData.sn }}
           </td>
           <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ loanData.amount }}
@@ -432,7 +433,7 @@ const user = usePage().props.auth.user;
               </p>
             </span>
           </td>
-          <!-- <td>
+          <td class="hidden">
             <Link
               href="#"
               class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
@@ -440,7 +441,7 @@ const user = usePage().props.auth.user;
               View
             </Link>
           </td>
-          <td>ref_Eirvvg</td> -->
+          <td class="hidden">ref_Eirvvg</td>
           <td>{{ loanData.date }}</td>
         </tr>
       </tbody>
