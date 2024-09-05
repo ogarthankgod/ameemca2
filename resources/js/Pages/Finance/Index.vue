@@ -1,18 +1,12 @@
 <script setup>
-import { Head, Link, usePage, useForm } from "@inertiajs/vue3";
+import { Head, usePage, useForm } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SectionHead from "@/Layouts/SectionHead.vue";
 import PaystackPop from "@paystack/inline-js";
 import InputError from "@/Components/InputError.vue";
 import WalletHistory from "./WalletHistory.vue";
-
-//Importing FlowBite Components
-import { onMounted } from "vue";
-import { initFlowbite } from "flowbite";
-// initialize components based on data attribute selectors
-onMounted(() => {
-  initFlowbite();
-});
+import modalButton from "@/Components/Modals/modalButton.vue";
+import AlertModal from "@/Components/Modals/Alert.vue";
 
 import {
   GiReceiveMoney,
@@ -39,6 +33,21 @@ addIcons(
   PrSpinner
 );
 
+//Importing FlowBite Components
+import { onMounted, ref } from "vue";
+import { initFlowbite } from "flowbite";
+
+// initialize components based on data attribute selectors
+onMounted(() => {
+  initFlowbite();
+
+  // const depositModalElem = document.getElementById("deposit-modal");
+  // const depositModal = new Modal(depositModalElem);
+
+  // const withdrawModalElem = document.getElementById("withdraw-modal");
+  // const withdrawModal = new Modal(depositModalElem);
+});
+
 defineOptions({
   layout: AuthenticatedLayout,
 });
@@ -60,8 +69,11 @@ const depositForm = useForm({
   walletType: "1",
   amount: "",
   realAmount: 0,
-  desc: "EMMANUEL",
+  desc: "Description",
   email: user.email,
+  phone: user.phone,
+  firstName: user.firstname,
+  lastName: user.lastname,
   transType: "deposit",
 });
 
@@ -81,106 +93,31 @@ const calcPaymentFee = (amount) => {
   }
 };
 
+const resumePaystack = async (access_code) => {
+  let myPromise = new Promise(function (resolve, reject) {
+    const popup = new PaystackPop();
+
+    popup.resumeTransaction(access_code);
+    resolve("I love You !!");
+    console.log("Closed Layout?");
+  });
+  const LoadingComplete = await myPromise;
+  console.log(LoadingComplete);
+};
+
 const depositSubmit = async () => {
-  depositForm.realAmount = amount * 100;
+  depositForm.realAmount = depositForm.amount * 100;
   depositForm
     .transform((data) => ({
       ...data,
       amount: calcPaymentFee(data.amount),
     }))
-    .post(route("finance.index"), {
-      onSuccess: () => {
-        const response = JSON.parse(usePage().props.response);
-        const access_code = response.data.access_code;
-
-        const popup = new PaystackPop();
-        popup.resumeTransaction(access_code);
-      },
-      onError: (error) => {
-        console.error(error);
-      },
-    });
+    .post(route("finance.index"));
 };
-
-// function payWithPaystack(e) {
-//   e.preventDefault();
-//   var amount = calculatePaymentFee(document.getElementById("amount").value);
-//   var real_amount = document.getElementById("amount").value * 100;
-//   let handler = PaystackPop.setup({
-//     key: "pk_test_017339973125c877c7ddb9fae77f14e6ad607269",
-//     // key: "<?php echo $public_key_live; ?>",
-//     email: document.getElementById("email").value,
-//     amount: amount,
-//     ref: "DEPOSIT_" + Math.floor(Math.random() * 1000000000 + 1),
-//     metadata: {
-//       custom_fields: [
-//         {
-//           type: document.getElementById("transType").value,
-//           real_amt: real_amount,
-//         },
-//       ],
-//     },
-//     onClose: function () {
-//       console.log("Transaction Cancelled.");
-//     },
-//     callback: function (response) {
-//       verifyDeposit(response.reference);
-//     },
-//   });
-//   handler.openIframe();
-// }
-
-// function verifyDeposit(token) {
-//   $.ajax({
-//     url: route("finance.deposit"),
-//     // url: "authController/deposit_process.php",
-//     type: "POST",
-//     beforeSend: function () {},
-//     data: {
-//       action: "verify",
-//       token: token,
-//     },
-//     dataType: "json",
-//     success: function (data) {
-//       if (data.approved) {
-//         $("#depositForm").html(data.notice);
-//       }
-//       if (data.failed) {
-//         $("#depositForm").html(data.notice);
-//       }
-//       if (data.error) {
-//       }
-//     },
-//     error: function (jqXHR, textStatus, errorThrown) {
-//       console.log(textStatus, errorThrown);
-//     },
-//   });
-// }
 </script>
 
 <template>
   <Head title="Wallet Dashboard" />
-  <div class="grid grid-cols-1 mb-7 mt-10 opacity-50">
-    <div
-      class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
-      role="alert"
-    >
-      <svg
-        class="flex-shrink-0 inline w-4 h-4 me-3"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-      >
-        <path
-          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
-        />
-      </svg>
-      <span class="sr-only">Info</span>
-      <div><span class="font-medium">!!</span> Background Jobs are still Compiling.</div>
-    </div>
-  </div>
-
   <SectionHead text="Wallet" />
 
   <div class="bg-white rounded-md p-5 mb-5">
@@ -344,7 +281,7 @@ const depositSubmit = async () => {
               >
               <input
                 v-model="depositForm.amount"
-                type="text"
+                type="number"
                 name="amount"
                 id="amount"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -374,7 +311,7 @@ const depositSubmit = async () => {
           <button
             :disabled="depositForm.processing"
             :class="{ 'opacity-25': depositForm.processing }"
-            type="submit"
+            type=""
             class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             <v-icon
@@ -519,6 +456,14 @@ const depositSubmit = async () => {
       </div>
     </div>
   </div>
+
+  <modalButton
+    class=""
+    :buttonProps="{ target: 'proceed-modal', text: 'Open Checkout' }"
+  />
+  <AlertModal
+    :alertProps="{ target: 'proceed-modal', body: 'Are you sure you want to proceed?' }"
+  />
 
   <div class="bg-white rounded-md p-5 mb-5">..<br /></div>
   <WalletHistory />

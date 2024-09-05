@@ -4,6 +4,7 @@ use App\Http\Controllers\AmcPostsController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AmcForumsController;
+use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\FintechController;
 use App\Http\Controllers\InvestmentsController;
@@ -95,6 +96,12 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('loan', LoanController::class);
 
+    Route::get('forms/beneficiary', [DocumentsController::class, 'beneficiaryForm'])->name("forms.beneficiary");
+    Route::get('forms/allotment', [DocumentsController::class, 'allotmentForm'])->name("forms.allotment");
+    Route::get('forms/others', [DocumentsController::class, 'otherForm'])->name("forms.others");
+
+    Route::resource("forms", DocumentsController::class);
+
 
     Route::get('video', function () {
         return Inertia::render('Video/Index', []);
@@ -122,6 +129,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('support', SupportTicketsController::class);
 
     Route::get('finance/verify', [FinanceController::class, 'verifyTransaction'])->name('finance.verify');
+    Route::get('finance/process', [FinanceController::class, 'processDeposit'])->name('finance.process');
     Route::resource("finance", FinanceController::class);
 
     Route::resource("fintech", FintechController::class);

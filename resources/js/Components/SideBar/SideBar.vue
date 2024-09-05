@@ -19,6 +19,7 @@ import {
   AiOpenDataSquare,
   GiTakeMyMoney,
   GiReceiveMoney,
+  RiFolderOpenFill,
 } from "oh-vue-icons/icons";
 import { addIcons } from "oh-vue-icons";
 
@@ -37,7 +38,8 @@ addIcons(
   GiFlagObjective,
   AiOpenDataSquare,
   GiTakeMyMoney,
-  GiReceiveMoney
+  GiReceiveMoney,
+  RiFolderOpenFill
 );
 
 // initialize components based on data attribute selectors
@@ -97,32 +99,58 @@ const sidebarItems1 = [
     ],
   },
   {
-    id: 3,
+    id: 5,
+    route: "forms.index",
+    icon: "ri-folder-open-fill",
+    text: "Forms/Documents",
+    children: [
+      {
+        id: 1,
+        route: "forms.beneficiary",
+        icon: "fa-file-alt",
+        text: "Beneficiary Form",
+      },
+      {
+        id: 2,
+        route: "forms.allotment",
+        icon: "fa-file-alt",
+        text: "Allotment Form",
+      },
+      {
+        id: 3,
+        route: "forms.others",
+        icon: "fa-file-alt",
+        text: "Other Forms",
+      },
+    ],
+  },
+  {
+    id: 6,
     route: "investments.index",
     icon: "gi-receive-money",
     text: "Investments",
   },
   {
-    id: 3,
+    id: 7,
     route: "forum.index",
     icon: "fa-comments",
     text: "Forums",
   },
   {
-    id: 4,
+    id: 8,
     route: "profile.edit",
     //ri-settings-3-fill
     icon: "md-settingssuggest",
     text: "Settings",
   },
   {
-    id: 5,
+    id: 9,
     route: "video.index",
     icon: "fa-video",
     text: "Video Conference",
   },
   {
-    id: 6,
+    id: 10,
     route: "upgrade.index",
     icon: "fa-fire",
     text: "Upgrade Package",
@@ -160,7 +188,7 @@ const sidebarItems2 = [
 <template>
   <aside class="w-0 md:w-64" aria-label="Sidebar">
     <div
-      class="fixed border-r-2 border-gray-200 left-auto top-16 mt-2.5 md:top-16 md:mt-0 z-40 min-h-screen transition-transform -translate-x-full md:translate-x-0 px-3 py-4 bg-gray-50 dark:bg-gray-800"
+      class="fixed border-r-2 border-gray-200 left-auto top-16 mt-2.5 md:top-16 md:mt-0 z-40 min-h-screen transition-transform -translate-x-full md:translate-x-0 px-3 py-4 bg-gray-50 dark:bg-gray-800 h-screen overflow-y-auto pb-20"
       id="logo-sidebar"
     >
       <ul class="space-y-2 font-medium">

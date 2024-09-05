@@ -1,3 +1,6 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+</script>
 <template>
   <div class="space-y-4 mb-20">
     <details class="group [&_summary::-webkit-details-marker]:hidden" open>
@@ -22,50 +25,30 @@
         </svg>
       </summary>
 
-      <section class="mt-4 px-4 leading-relaxed text-gray-700">
+      <section class="mt-4 leading-relaxed text-gray-700">
         <!-- Wallet History Table Here -->
         <div class="rounded-lg border border-gray-200">
-          <div class="overflow-x-auto rounded-t-lg">
-            <table class="min-w-full divide-y-2 bg-white text-sm">
-              <thead class="ltr:text-left rtl:text-right">
+          <div class="overflow-x-scroll rounded-t-lg">
+            <table class="min-w-full w-full divide-y-2 bg-white text-sm">
+              <thead class="">
                 <tr>
-                  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    SN
-                  </th>
-                  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Name
-                  </th>
-                  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Trans. Type
-                  </th>
-                  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Amount
-                  </th>
-                  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Currency
-                  </th>
-                  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Ref.
-                  </th>
-                  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Status
-                  </th>
-                  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Date
-                  </th>
-                  <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Actions
-                  </th>
+                  <th class="px-2 py-2 font-medium text-gray-900">SN</th>
+                  <th class="px-2 py-2 font-medium text-gray-900">Name</th>
+                  <th class="px-2 py-2 font-medium text-gray-900">Trans. Type</th>
+                  <th class="px-2 py-2 font-medium text-gray-900">Amount</th>
+                  <th class="px-2 py-2 font-medium text-gray-900">Currency</th>
+                  <th class="px-2 py-2 font-medium text-gray-900">Ref.</th>
+                  <th class="px-2 py-2 font-medium text-gray-900">Status</th>
+                  <th class="px-2 py-2 font-medium text-gray-900">Date</th>
+                  <th class="px-2 py-2 font-medium text-gray-900">Actions</th>
                 </tr>
               </thead>
 
               <tbody class="divide-y divide-gray-200">
                 <tr>
-                  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">1</td>
-                  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    John Doe
-                  </td>
-                  <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  <td class="px-2 py-2 font-medium text-gray-900">1</td>
+                  <td class="px-2 py-2 font-medium text-gray-900">John Doe</td>
+                  <td class="px-2 py-2 font-medium text-gray-900">
                     <span
                       class="inline-flex items-center justify-center rounded-full border border-red-500 px-2.5 py-0.5 text-red-400"
                     >
@@ -84,13 +67,13 @@
                         />
                       </svg>
 
-                      <p class="whitespace-nowrap text-sm">Withdrawal</p>
+                      <p class="text-sm">Withdrawal</p>
                     </span>
                   </td>
-                  <td class="whitespace-nowrap px-4 py-2 text-gray-700">₦1,000,000.00</td>
-                  <td class="whitespace-nowrap px-4 py-2 text-gray-700">₦</td>
-                  <td class="whitespace-nowrap px-4 py-2 text-gray-700">Tje344jfe</td>
-                  <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                  <td class="px-2 py-2 text-gray-700">₦1,000,000.00</td>
+                  <td class="px-2 py-2 text-gray-700">₦</td>
+                  <td class="px-2 py-2 text-gray-700">Tje344jfe</td>
+                  <td class="px-2 py-2 text-gray-700">
                     <span
                       class="inline-flex items-center justify-center rounded-full border border-emerald-500 px-2.5 py-0.5 text-emerald-700"
                     >
@@ -109,14 +92,14 @@
                         />
                       </svg>
 
-                      <p class="whitespace-nowrap text-sm">Verified</p>
+                      <p class="text-sm">Verified</p>
                     </span>
                   </td>
-                  <td class="whitespace-nowrap px-4 py-2">2024-25-08</td>
-                  <td class="whitespace-nowrap px-4 py-2">
+                  <td class="px-2 py-2">2024-25-08</td>
+                  <td class="px-2 py-2">
                     <Link
                       href="#"
-                      class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+                      class="inline-block rounded bg-indigo-600 px-2 py-2 text-xs font-medium text-white hover:bg-indigo-700"
                     >
                       View
                     </Link>
@@ -126,7 +109,7 @@
             </table>
           </div>
 
-          <div class="rounded-b-lg border-t border-gray-200 px-4 py-2">
+          <div class="rounded-b-lg border-t border-gray-200 px-2 py-2">
             <ol class="flex justify-end gap-1 text-xs font-medium">
               <li>
                 <a

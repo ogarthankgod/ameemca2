@@ -70,19 +70,29 @@ class FinanceController extends Controller
       'email' => ['required', 'email'],
       'amount' => ['required'],
       'transType' => ['required'],
+      'firstName' => ['required'],
+      'lastName' => ['required'],
+      'desc' => ['required'],
+      'phone' => ['required'],
+      'realAmount' => ['required'],
+      'walletType' => ['required'],
     ]);
 
     $url = "https://api.paystack.co/transaction/initialize";
     $fields = [
       'email' => $request->email,
       'amount' => $request->amount,
+      'first_name' => $request->firstname,
+      'lastName' => $request->lastname,
+      'phone' => $request->phone,
       'ref' => "DEPOSIT_" . floor(mt_rand(0, 10) * 1000000000 + 1),
-      'metadata' => [
-        'custom_fields' => [
+      'metadata' => json_encode([
+        "custom_fields" => json_encode([
           'type' => $request->transType,
-          'real_amt' => $request->realAmout,
-        ]
-      ],
+          'real_amt' => $request->realAmount,
+          'desc' => $request->desc,
+        ])
+      ])
     ];
 
     $fields_string = http_build_query($fields);
@@ -105,7 +115,23 @@ class FinanceController extends Controller
     //execute post
     $result = curl_exec($ch);
 
-    return $this->index($request, $result);
+    // return $this->index($request, $result);
+    // return to_route("finance.process", [
+    //   "response" => $result
+    // ]);
+    return Inertia::render("Finance/ProcessDeposit", [
+      "response" => $result
+    ]);
+    // return to_route("finance.index", [
+    //   'response' => $result
+    // ]);
+  }
+
+  public function processDeposit(Request $request)
+  {
+    return Inertia::render("Finance/ProcessDeposit", [
+      "response" => 'Testing from Controller'
+    ]);
   }
 
   public function verifyTransaction(Request $request)
