@@ -2,7 +2,6 @@
 import { Head, Link, usePage, useForm } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SectionHead from "@/Layouts/SectionHead.vue";
-import initFlowBite from "@/Components/initFlowBite.vue";
 
 import { FaCloudUploadAlt } from "oh-vue-icons/icons";
 import { addIcons } from "oh-vue-icons";
@@ -147,14 +146,25 @@ const allotmentFormSubmit = () => {
                   <li>...</li>
                 </ul>
 
+                <div class="">
+                  <label for="file_name"></label>
+                  <input
+                    class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="document"
+                    type="text"
+                    name="file_name"
+                    placeholder="Document title"
+                  />
+                </div>
+
                 <div class="mb-4">
                   <label
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    for="small_size"
+                    for="document"
                   ></label>
                   <input
                     class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    id="small_size"
+                    id="document"
                     type="file"
                     name="file"
                   />

@@ -458,7 +458,7 @@ const depositSubmit = async () => {
   </div>
 
   <modalButton
-    class=""
+    class="hidden"
     :buttonProps="{ target: 'proceed-modal', text: 'Open Checkout' }"
   />
   <AlertModal
