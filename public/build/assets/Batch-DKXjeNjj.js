@@ -1,1 +1,0 @@
-import{o as e,c as a,a as t,u as o,F as c,b as r,Z as s}from"./app-CBJNriNC.js";const l=r("h1",null,"Hello World",-1),p={__name:"Batch",setup(n){return(_,u)=>(e(),a(c,null,[t(o(s),{title:"Welcome"}),l],64))}};export{p as default};

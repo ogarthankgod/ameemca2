@@ -1,1 +1,0 @@
-import{o as e,c as a,a as o,u as t,F as s,b as r,Z as c}from"./app-CBJNriNC.js";const l=r("h1",null,"Hello World",-1),p={__name:"Loans",setup(n){return(_,u)=>(e(),a(s,null,[o(t(c),{title:"Welcome"}),l],64))}};export{p as default};
